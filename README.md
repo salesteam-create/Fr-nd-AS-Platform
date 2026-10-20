@@ -9,7 +9,13 @@ npm install
 npm run dev        # http://localhost:3000
 ```
 
-Production build: `npm run build && npm start`. It deploys as-is to Vercel or any Node host.
+## Hosting (GitHub Pages)
+
+Live demo: https://salesteam-create.github.io/Fr-nd-AS-Platform/
+
+The app is a static export (`npm run build` writes to `out/`). The workflow in `.github/workflows/pages.yml` builds and deploys it on every push to the working branch or `main`. GitHub Pages must use **Settings → Pages → Source: GitHub Actions**.
+
+To preview the export locally under the same sub-path: `PAGES_BASE_PATH=/Fr-nd-AS-Platform npm run build`, then serve the parent of `out/` so the site sits at `/Fr-nd-AS-Platform/`.
 
 ## What is in the demo
 

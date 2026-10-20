@@ -23,14 +23,14 @@ export default function MenuPage() {
         action={<Tabs value={ws} onChange={setWs} options={weeks.map((w, i) => ({ value: w, label: i === 0 ? "This week" : i === 1 ? "Next week" : `Week ${weekNumber(w)}` }))} />}
       />
       {!menu.published ? (
-        <Card className="p-8 text-center text-gray-600">The menu for this week is not published yet. Check back soon.</Card>
+        <Card className="p-8 text-center text-gra-500">The menu for this week is not published yet. Check back soon.</Card>
       ) : (
         <div className="grid gap-4">
           {WEEKDAYS.map((wd) => (
             <Card key={wd} className="p-5">
-              <p className="mb-4 font-serif text-lg font-semibold text-brand-900">{fmtDay(dates[wd])}</p>
+              <p className="mb-4 text-lg font-medium text-sort-900">{fmtDay(dates[wd])}</p>
               {holidayName(dates[wd]) ? (
-                <p className="text-sm text-gray-500">Closed · {holidayName(dates[wd])}</p>
+                <p className="text-sm text-gra-500">Closed · {holidayName(dates[wd])}</p>
               ) : (
                 <div className="grid gap-5 md:grid-cols-2">
                   <DishCard dish={menu.days[wd].main} kind="Main" />

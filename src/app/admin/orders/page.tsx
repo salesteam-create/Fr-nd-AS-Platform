@@ -36,8 +36,8 @@ export default function OrdersPage() {
       <PageHeader title="Orders" subtitle="All customer orders for the week. Click a cell to change it, also after the deadline." />
       <div className="mb-4 flex flex-wrap items-center gap-3">
         <DateNav value={ws} onChange={setWs} step={7} mode="week" />
-        <span className="flex items-center gap-3 text-xs text-gray-500">
-          <span className="flex items-center gap-1"><span className="h-3 w-3 rounded bg-brand-50 ring-1 ring-brand-200" /> Standing order</span>
+        <span className="flex items-center gap-3 text-xs text-gra-500">
+          <span className="flex items-center gap-1"><span className="h-3 w-3 rounded bg-rosa-100 ring-1 ring-gra-300" /> Standing order</span>
           <span className="flex items-center gap-1"><span className="h-3 w-3 rounded bg-orange-50 ring-1 ring-orange-200" /> Changed</span>
           <span className="flex items-center gap-1"><Lock className="h-3 w-3" /> Locked</span>
         </span>
@@ -45,7 +45,7 @@ export default function OrdersPage() {
       <Card className="overflow-x-auto">
         <table className="min-w-full text-sm">
           <thead>
-            <tr className="border-b border-gray-100 text-left text-xs uppercase tracking-wide text-gray-500">
+            <tr className="border-b border-gra-300 text-left text-xs uppercase tracking-wide text-gra-500">
               <th className="px-4 py-3 font-medium">Customer</th>
               {WEEKDAYS.map((wd) => (
                 <th key={wd} className="px-2 py-3 text-center font-medium">
@@ -58,15 +58,15 @@ export default function OrdersPage() {
               <th className="px-4 py-3 text-right font-medium">Week</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-50">
+          <tbody className="divide-y divide-gra-100">
             {customers.map((c) => {
               const hasStanding = !!standingPatternOn(data, c.id, dates.fri);
               let week = 0;
               return (
                 <tr key={c.id}>
                   <td className="whitespace-nowrap px-4 py-2">
-                    <p className="font-medium text-gray-900">{c.name}</p>
-                    <p className="text-xs text-gray-500">{hasStanding ? "Standing order" : "Ad hoc"}{!c.active && " · inactive"}</p>
+                    <p className="font-medium text-sort-900">{c.name}</p>
+                    <p className="text-xs text-gra-500">{hasStanding ? "Standing order" : "Ad hoc"}{!c.active && " · inactive"}</p>
                   </td>
                   {WEEKDAYS.map((wd) => {
                     const d = dates[wd];
@@ -79,26 +79,26 @@ export default function OrdersPage() {
                           disabled={closed}
                           onClick={() => setEdit({ customerId: c.id, date: d, order: structuredClone(order ?? emptyDay()) })}
                           className={cx(
-                            "w-16 rounded-md py-1.5 font-semibold tabular-nums ring-1 ring-inset hover:ring-2",
-                            closed && "cursor-default bg-gray-50 text-gray-300 ring-gray-100 hover:ring-1",
-                            !closed && source === "override" && "bg-orange-50 text-accent-600 ring-orange-200",
-                            !closed && source === "standing" && "bg-brand-50 text-brand-800 ring-brand-200",
-                            !closed && source === "none" && "bg-white text-gray-300 ring-gray-100",
+                            "w-16 rounded-md py-1.5 font-medium tabular-nums ring-1 ring-inset hover:ring-2",
+                            closed && "cursor-default bg-krem text-gra-300 ring-gra-300 hover:ring-1",
+                            !closed && source === "override" && "bg-orange-50 text-rosa-700 ring-orange-200",
+                            !closed && source === "standing" && "bg-rosa-100 text-sort-900 ring-gra-300",
+                            !closed && source === "none" && "bg-white text-gra-300 ring-gra-300",
                           )}
                         >
                           {closed ? "—" : order ? order.total : "0"}
                         </button>
-                        {order && dietSum(order) > 0 && <p className="mt-0.5 text-[10px] text-gray-400">{dietSum(order)} special</p>}
+                        {order && dietSum(order) > 0 && <p className="mt-0.5 text-[10px] text-gra-500">{dietSum(order)} special</p>}
                       </td>
                     );
                   })}
-                  <td className="px-4 py-2 text-right font-semibold tabular-nums">{week}</td>
+                  <td className="px-4 py-2 text-right font-medium tabular-nums">{week}</td>
                 </tr>
               );
             })}
           </tbody>
           <tfoot>
-            <tr className="border-t-2 border-gray-200 bg-gray-50 font-semibold">
+            <tr className="border-t-2 border-gra-300 bg-krem font-medium">
               <td className="px-4 py-3">Total</td>
               {totals.map((t, i) => (
                 <td key={i} className="px-2 py-3 text-center tabular-nums">

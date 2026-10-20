@@ -51,7 +51,7 @@ The dark **Demo** button (bottom left) opens demo controls:
 
 ## Notes
 
-- Placeholder branding (colours in `tailwind.config.ts`, wordmark in `src/components/Logo.tsx`, food photos in `src/components/DishImage.tsx`). Swap these when Frænd's assets arrive.
+- Styled with the Frænd design system: tokens in `tailwind.config.ts`, logo, tagline and photos in `public/brand/`. Fonts are Google Fonts stand-ins (Jost, Sacramento) and dish photos are samples until Frænd supplies real ones.
 - The UI is in English for the demo. Production will be Norwegian (bokmål).
 - Times follow the viewer's browser time zone.
 - Assumptions follow BRD section 11 (company-level portion counts, invoice only, weekdays, Monday orders lock on Friday).

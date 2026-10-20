@@ -30,13 +30,13 @@ export function DayEditor({
     <div>
       <div className="flex flex-wrap items-center gap-3">
         <Stepper label={`${label} portions`} value={value.total} onChange={(n) => onChange({ ...value, total: n })} disabled={disabled} />
-        <span className="text-sm text-gray-500">portions</span>
+        <span className="text-sm text-gra-500">portions</span>
         <button
           type="button"
           onClick={() => setOpen((o) => !o)}
           className={cx(
             "ml-auto inline-flex items-center gap-1 rounded-md px-2 py-1 text-sm font-medium",
-            over ? "text-red-600" : "text-brand-700 hover:bg-brand-50",
+            over ? "text-red-600" : "text-sort-900 hover:bg-gra-100",
           )}
         >
           Special diets{special > 0 && ` (${special})`}
@@ -44,7 +44,7 @@ export function DayEditor({
         </button>
       </div>
       {special > 0 && !open && (
-        <p className="mt-2 text-xs text-gray-500">
+        <p className="mt-2 text-xs text-gra-500">
           {DIET_KEYS.filter((k) => value.diets[k] > 0)
             .map((k) => `${value.diets[k]} ${DIET_LABEL[k].toLowerCase()}`)
             .join(" · ")}
@@ -52,12 +52,12 @@ export function DayEditor({
         </p>
       )}
       {open && (
-        <div className="mt-3 rounded-lg bg-gray-50 p-3">
-          <p className="mb-2 text-xs text-gray-500">Of the {value.total} portions, how many need a special diet?</p>
+        <div className="mt-3 rounded-lg bg-krem p-3">
+          <p className="mb-2 text-xs text-gra-500">Of the {value.total} portions, how many need a special diet?</p>
           <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
             {DIET_KEYS.map((k) => (
               <div key={k} className="flex items-center justify-between gap-2">
-                <span className="text-sm text-gray-700">{DIET_LABEL[k]}</span>
+                <span className="text-sm text-sort-700">{DIET_LABEL[k]}</span>
                 <Stepper size="sm" label={`${label} ${DIET_LABEL[k]}`} value={value.diets[k]} onChange={(n) => setDiet(k, n)} disabled={disabled} />
               </div>
             ))}

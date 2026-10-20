@@ -60,7 +60,7 @@ export default function DeliveryPage() {
         {areas.map((area) => (
           <Card key={area}>
             <CardHeader title={area} subtitle={`${rows.filter((r) => r.area === area).length} stops`} />
-            <div className="divide-y divide-gray-100">
+            <div className="divide-y divide-gra-100">
               {rows
                 .filter((r) => r.area === area)
                 .map((r) => {
@@ -68,18 +68,18 @@ export default function DeliveryPage() {
                   return (
                     <div key={r.customer.id} className="grid gap-3 px-5 py-4 sm:grid-cols-[1fr_6rem_1fr]">
                       <div>
-                        <p className="font-medium text-gray-900">{r.customer.name}</p>
-                        <p className="mt-1 flex items-center gap-1 text-sm text-gray-600">
+                        <p className="font-medium text-sort-900">{r.customer.name}</p>
+                        <p className="mt-1 flex items-center gap-1 text-sm text-gra-500">
                           <MapPin className="h-3.5 w-3.5" /> {a.street}, {a.postcode} {a.city}
                         </p>
-                        <p className="mt-0.5 flex items-center gap-1 text-sm text-gray-600">
+                        <p className="mt-0.5 flex items-center gap-1 text-sm text-gra-500">
                           <Phone className="h-3.5 w-3.5" /> {r.customer.contactName} ·{" "}
-                          <a className="text-brand-700 underline" href={`tel:${r.customer.phone.replace(/\s/g, "")}`}>
+                          <a className="text-sort-900 underline" href={`tel:${r.customer.phone.replace(/\s/g, "")}`}>
                             {r.customer.phone}
                           </a>
                         </p>
                       </div>
-                      <p className="text-3xl font-semibold tabular-nums text-gray-900">{r.order.total}</p>
+                      <p className="text-3xl font-medium tabular-nums text-sort-900">{r.order.total}</p>
                       <div className="space-y-1">
                         <div className="flex flex-wrap gap-1">
                           {DIET_KEYS.filter((k) => r.order.diets[k] > 0).map((k) => (
@@ -88,7 +88,7 @@ export default function DeliveryPage() {
                             </Badge>
                           ))}
                         </div>
-                        {r.order.comment && <p className="text-sm italic text-gray-600">“{r.order.comment}”</p>}
+                        {r.order.comment && <p className="text-sm italic text-gra-500">“{r.order.comment}”</p>}
                       </div>
                     </div>
                   );
@@ -96,7 +96,7 @@ export default function DeliveryPage() {
             </div>
           </Card>
         ))}
-        {rows.length === 0 && <Card className="p-8 text-center text-gray-500">No deliveries on this day.</Card>}
+        {rows.length === 0 && <Card className="p-8 text-center text-gra-500">No deliveries on this day.</Card>}
       </div>
     </div>
   );

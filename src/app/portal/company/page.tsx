@@ -76,13 +76,13 @@ export default function CompanyPage() {
 
         <Card>
           <CardHeader title="Delivery addresses" subtitle="Add more locations if you have several offices" />
-          <div className="divide-y divide-gray-50">
+          <div className="divide-y divide-gra-100">
             {customer.deliveryAddresses.map((a) => (
               <div key={a.id} className="flex items-start gap-3 px-5 py-3">
-                <MapPin className="mt-0.5 h-4 w-4 text-brand-500" />
+                <MapPin className="mt-0.5 h-4 w-4 text-sort-700" />
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-900">{a.label}</p>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm font-medium text-sort-900">{a.label}</p>
+                  <p className="text-sm text-gra-500">
                     {a.street}, {a.postcode} {a.city}
                   </p>
                 </div>
@@ -90,7 +90,7 @@ export default function CompanyPage() {
               </div>
             ))}
           </div>
-          <div className="grid gap-2 border-t border-gray-100 p-5 sm:grid-cols-2">
+          <div className="grid gap-2 border-t border-gra-300 p-5 sm:grid-cols-2">
             <input className={inputCls} placeholder="Label (e.g. Warehouse)" value={addr.label} onChange={(e) => setAddr({ ...addr, label: e.target.value })} />
             <input className={inputCls} placeholder="Street address" value={addr.street} onChange={(e) => setAddr({ ...addr, street: e.target.value })} />
             <input className={inputCls} placeholder="Postcode" maxLength={4} value={addr.postcode} onChange={(e) => setAddr({ ...addr, postcode: e.target.value.replace(/\D/g, "") })} />
@@ -102,18 +102,18 @@ export default function CompanyPage() {
 
         <Card className="lg:col-span-2">
           <CardHeader title="Users" subtitle="People who can order on behalf of the company" />
-          <div className="divide-y divide-gray-50">
+          <div className="divide-y divide-gra-100">
             {customer.users.map((u) => (
               <div key={u.id} className="flex items-center justify-between px-5 py-3">
                 <div>
-                  <p className="text-sm font-medium text-gray-900">{u.name}</p>
-                  <p className="text-sm text-gray-500">{u.email}</p>
+                  <p className="text-sm font-medium text-sort-900">{u.name}</p>
+                  <p className="text-sm text-gra-500">{u.email}</p>
                 </div>
                 <Badge tone={u.role === "admin" ? "blue" : "gray"}>{u.role === "admin" ? "Company admin" : "User"}</Badge>
               </div>
             ))}
           </div>
-          <div className="flex flex-wrap gap-2 border-t border-gray-100 p-5">
+          <div className="flex flex-wrap gap-2 border-t border-gra-300 p-5">
             <input className={`${inputCls} sm:max-w-xs`} placeholder="Name" value={invite.name} onChange={(e) => setInvite({ ...invite, name: e.target.value })} />
             <input className={`${inputCls} sm:max-w-xs`} placeholder="Email" value={invite.email} onChange={(e) => setInvite({ ...invite, email: e.target.value })} />
             <Button variant="secondary" onClick={inviteUser}>

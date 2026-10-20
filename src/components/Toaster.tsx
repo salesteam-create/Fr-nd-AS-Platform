@@ -14,12 +14,12 @@ export function Toaster() {
           <button
             key={t.id}
             onClick={() => dismiss(t.id)}
-            className="pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-xl bg-white p-4 text-left shadow-lg ring-1 ring-black/5"
+            className="pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-xl bg-white p-4 text-left shadow-card ring-1 ring-gra-300"
           >
-            <Icon className={t.kind === "error" ? "h-5 w-5 text-red-600" : t.kind === "info" ? "h-5 w-5 text-sky-600" : "h-5 w-5 text-brand-600"} />
+            <Icon className={t.kind === "error" ? "h-5 w-5 text-red-600" : t.kind === "info" ? "h-5 w-5 text-sky-600" : "h-5 w-5 text-sort-700"} />
             <div>
-              <p className="text-sm font-semibold text-gray-900">{t.title}</p>
-              {t.body && <p className="mt-0.5 text-sm text-gray-600">{t.body}</p>}
+              <p className="text-sm font-medium text-sort-900">{t.title}</p>
+              {t.body && <p className="mt-0.5 text-sm text-gra-500">{t.body}</p>}
             </div>
           </button>
         );

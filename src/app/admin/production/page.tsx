@@ -65,18 +65,18 @@ export default function ProductionPage() {
           <Table head={["Item", "Portions", "Allergens"]}>
             {lines.map((l) => (
               <tr key={l.key} className={l.portions === 0 ? "opacity-40" : ""}>
-                <Td className={l.dish ? "font-semibold text-gray-900" : "pl-8"}>
+                <Td className={l.dish ? "font-medium text-sort-900" : "pl-8"}>
                   {l.label}
                   {l.notes && l.notes.length > 0 && (
-                    <ul className="mt-1 text-xs font-normal text-gray-500">
+                    <ul className="mt-1 text-xs font-normal text-gra-500">
                       {l.notes.map((n) => (
                         <li key={n}>{n}</li>
                       ))}
                     </ul>
                   )}
                 </Td>
-                <Td className="text-lg font-semibold tabular-nums text-gray-900">{l.portions}</Td>
-                <Td className="text-xs text-gray-500">{l.dish?.allergens.join(", ")}</Td>
+                <Td className="text-lg font-medium tabular-nums text-sort-900">{l.portions}</Td>
+                <Td className="text-xs text-gra-500">{l.dish?.allergens.join(", ")}</Td>
               </tr>
             ))}
           </Table>
@@ -87,8 +87,8 @@ export default function ProductionPage() {
           <Table head={["Company", "Total", "Regular", "Special diets", "Comment"]}>
             {rows.map((r) => (
               <tr key={r.customer.id}>
-                <Td className="font-medium text-gray-900">{r.customer.name}</Td>
-                <Td className="text-lg font-semibold tabular-nums text-gray-900">{r.order.total}</Td>
+                <Td className="font-medium text-sort-900">{r.customer.name}</Td>
+                <Td className="text-lg font-medium tabular-nums text-sort-900">{r.order.total}</Td>
                 <Td className="tabular-nums">{r.order.total - dietSum(r.order)}</Td>
                 <Td>
                   <div className="flex flex-wrap gap-1">
@@ -100,12 +100,12 @@ export default function ProductionPage() {
                     ))}
                   </div>
                 </Td>
-                <Td className="text-xs text-gray-500">{r.order.comment}</Td>
+                <Td className="text-xs text-gra-500">{r.order.comment}</Td>
               </tr>
             ))}
             {rows.length === 0 && (
               <tr>
-                <Td className="text-gray-500">No orders for this day.</Td>
+                <Td className="text-gra-500">No orders for this day.</Td>
               </tr>
             )}
           </Table>

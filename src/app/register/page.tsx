@@ -94,15 +94,15 @@ export default function RegisterPage() {
   const err = (k: string) => errors[k] && <span className="mt-1 block text-xs text-red-600">{errors[k]}</span>;
 
   return (
-    <div className="min-h-screen bg-cream-100 px-4 py-10">
+    <div className="min-h-screen bg-krem px-4 py-10">
       <div className="mx-auto max-w-2xl">
         <Logo />
-        <h1 className="mt-8 font-serif text-3xl font-semibold text-brand-900">Register your company</h1>
-        <p className="mt-1 text-gray-600">Takes about two minutes. You can place your first order straight after.</p>
+        <h1 className="mt-8 text-3xl font-medium text-sort-900">Register your company</h1>
+        <p className="mt-1 text-gra-500">Takes about two minutes. You can place your first order straight after.</p>
 
         <form onSubmit={submit} className="mt-8 space-y-6">
           <Card className="space-y-4 p-6">
-            <h2 className="font-semibold text-gray-900">Company</h2>
+            <h2 className="font-medium text-sort-900">Company</h2>
             <Field label="Organisation number" hint="We look up your company in the Brønnøysund register.">
               <div className="flex gap-2">
                 <input className={inputCls} inputMode="numeric" placeholder="9 digits" value={f.orgNumber} onChange={(e) => set("orgNumber", e.target.value)} />
@@ -112,7 +112,7 @@ export default function RegisterPage() {
               </div>
               {err("orgNumber")}
               {lookedUp && (
-                <span className="mt-1 flex items-center gap-1 text-xs text-brand-700">
+                <span className="mt-1 flex items-center gap-1 text-xs text-sort-900">
                   <CheckCircle2 className="h-3.5 w-3.5" /> Found in the Brønnøysund register (simulated). Details filled in below.
                 </span>
               )}
@@ -133,7 +133,7 @@ export default function RegisterPage() {
           </Card>
 
           <Card className="space-y-4 p-6">
-            <h2 className="font-semibold text-gray-900">Contact person</h2>
+            <h2 className="font-medium text-sort-900">Contact person</h2>
             <div className="grid gap-4 sm:grid-cols-2">
               <Field label="Full name">
                 <input className={inputCls} value={f.contactName} onChange={(e) => set("contactName", e.target.value)} />
@@ -155,7 +155,7 @@ export default function RegisterPage() {
           </Card>
 
           <Card className="space-y-4 p-6">
-            <h2 className="font-semibold text-gray-900">Delivery address</h2>
+            <h2 className="font-medium text-sort-900">Delivery address</h2>
             <Field label="Street address">
               <input className={inputCls} value={f.street} onChange={(e) => set("street", e.target.value)} />
               {err("street")}
@@ -168,14 +168,14 @@ export default function RegisterPage() {
                 <input className={inputCls} value={f.city} onChange={(e) => set("city", e.target.value)} />
               </Field>
             </div>
-            {area && <p className="text-xs text-brand-700">✓ Inside our delivery area: {area.name}</p>}
+            {area && <p className="text-xs text-sort-900">✓ Inside our delivery area: {area.name}</p>}
             {err("postcode")}
           </Card>
 
           <Card className="space-y-4 p-6">
-            <h2 className="font-semibold text-gray-900">Invoicing</h2>
-            <label className="flex items-center gap-2 text-sm text-gray-700">
-              <input type="checkbox" checked={f.sameBilling} onChange={(e) => set("sameBilling", e.target.checked)} className="rounded text-brand-600" />
+            <h2 className="font-medium text-sort-900">Invoicing</h2>
+            <label className="flex items-center gap-2 text-sm text-sort-700">
+              <input type="checkbox" checked={f.sameBilling} onChange={(e) => set("sameBilling", e.target.checked)} className="rounded text-sort-700" />
               Billing address is the same as the delivery address
             </label>
             {!f.sameBilling && (
@@ -201,9 +201,9 @@ export default function RegisterPage() {
           </Card>
 
           <div className="flex flex-wrap items-center justify-between gap-4">
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gra-500">
               Already a customer?{" "}
-              <Link href="/login" className="font-medium text-accent-600 hover:underline">
+              <Link href="/login" className="font-medium text-rosa-700 hover:underline">
                 Log in
               </Link>
             </p>

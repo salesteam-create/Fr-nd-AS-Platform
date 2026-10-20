@@ -58,7 +58,7 @@ export default function InvoicingPage() {
           <Table head={["Customer", "Deliveries", "Portions", "Amount excl. VAT", "Status"]}>
             {candidates.map(({ c, lines, amount, existing }) => (
               <tr key={c.id}>
-                <Td className="font-medium text-gray-900">{c.name}</Td>
+                <Td className="font-medium text-sort-900">{c.name}</Td>
                 <Td className="tabular-nums">{lines.length}</Td>
                 <Td className="tabular-nums">{lines.reduce((s, l) => s + l.portions, 0)}</Td>
                 <Td className="tabular-nums">{nok(amount)}</Td>
@@ -66,8 +66,8 @@ export default function InvoicingPage() {
               </tr>
             ))}
           </Table>
-          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-gray-100 p-5">
-            <p className="text-sm text-gray-600">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-gra-300 p-5">
+            <p className="text-sm text-gra-500">
               {toCreate.length} invoice(s) to create · {nok(toCreate.reduce((s, x) => s + x.amount, 0))} excl. VAT
             </p>
             <Button
@@ -86,18 +86,18 @@ export default function InvoicingPage() {
           <CardHeader title="Tripletex connection" />
           <div className="space-y-4 p-5">
             <div className="flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-50">
-                <Plug className="h-5 w-5 text-brand-600" />
+              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-rosa-100">
+                <Plug className="h-5 w-5 text-sort-700" />
               </span>
               <div>
-                <p className="font-medium text-gray-900">Connected (simulated)</p>
-                <p className="text-xs text-gray-500">Customers, invoices and ledger via the Tripletex API</p>
+                <p className="font-medium text-sort-900">Connected (simulated)</p>
+                <p className="text-xs text-gra-500">Customers, invoices and ledger via the Tripletex API</p>
               </div>
             </div>
-            <ul className="space-y-1 text-sm text-gray-600">
-              <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-brand-500" /> New customers created automatically</li>
-              <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-brand-500" /> Invoices sent as PDF or EHF</li>
-              <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-brand-500" /> Payments synced back to the platform</li>
+            <ul className="space-y-1 text-sm text-gra-500">
+              <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-sort-700" /> New customers created automatically</li>
+              <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-sort-700" /> Invoices sent as PDF or EHF</li>
+              <li className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-sort-700" /> Payments synced back to the platform</li>
             </ul>
             <Button variant="secondary" className="w-full" onClick={syncLedger}>
               <RefreshCw className="h-4 w-4" /> Sync customer ledger now
@@ -119,7 +119,7 @@ export default function InvoicingPage() {
         <Table head={["Invoice", "Customer", "Period", "Total incl. VAT", "Channel", "Tripletex", ""]}>
           {pending.map((i) => (
             <tr key={i.id}>
-              <Td className="font-medium text-gray-900">{i.number}</Td>
+              <Td className="font-medium text-sort-900">{i.number}</Td>
               <Td>{name(i.customerId)}</Td>
               <Td className="whitespace-nowrap">
                 {fmtDate(i.periodStart)} – {fmtDate(i.periodEnd)}
@@ -146,7 +146,7 @@ export default function InvoicingPage() {
           ))}
           {pending.length === 0 && (
             <tr>
-              <Td className="text-gray-500">Nothing waiting. All invoices are in Tripletex.</Td>
+              <Td className="text-gra-500">Nothing waiting. All invoices are in Tripletex.</Td>
             </tr>
           )}
         </Table>
@@ -158,7 +158,7 @@ export default function InvoicingPage() {
           <Table head={["Invoice", "Customer", "Period", "Total", "Status", "Tripletex", ""]}>
             {recent.map((i) => (
               <tr key={i.id}>
-                <Td className="font-medium text-gray-900">{i.number}</Td>
+                <Td className="font-medium text-sort-900">{i.number}</Td>
                 <Td className="whitespace-nowrap">{name(i.customerId)}</Td>
                 <Td className="whitespace-nowrap">
                   {fmtDate(i.periodStart)} – {fmtDate(i.periodEnd)}
@@ -167,7 +167,7 @@ export default function InvoicingPage() {
                 <Td>
                   <InvoiceStatus inv={i} />
                 </Td>
-                <Td className="text-xs text-gray-500">{i.tripletexId ? `#${i.tripletexId}` : "–"}</Td>
+                <Td className="text-xs text-gra-500">{i.tripletexId ? `#${i.tripletexId}` : "–"}</Td>
                 <Td>
                   <Button variant="ghost" size="sm" onClick={() => setView(i)}>
                     <Eye className="h-4 w-4" />
@@ -179,11 +179,11 @@ export default function InvoicingPage() {
         </Card>
         <Card>
           <CardHeader title="Sync log" />
-          <ul className="max-h-80 divide-y divide-gray-50 overflow-y-auto">
+          <ul className="max-h-80 divide-y divide-gra-100 overflow-y-auto">
             {data.syncLog.map((l) => (
               <li key={l.id} className="px-5 py-3 text-sm">
-                <p className="text-gray-800">{l.message}</p>
-                <p className="mt-0.5 text-xs text-gray-400">
+                <p className="text-sort-900">{l.message}</p>
+                <p className="mt-0.5 text-xs text-gra-500">
                   {fmtDateTime(new Date(l.at))} · {l.kind}
                 </p>
               </li>

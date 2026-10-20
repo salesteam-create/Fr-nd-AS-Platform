@@ -31,11 +31,11 @@ export default function LoginPage() {
     notify({ kind: "info", title: `${provider} sign-in`, body: "Single sign-on is planned for a later phase (FR-04)." });
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-cream-100 px-4 py-12">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-krem px-4 py-12">
       <Logo />
       <Card className="mt-8 w-full max-w-md p-6 sm:p-8">
-        <h1 className="font-serif text-2xl font-semibold text-brand-900">Log in</h1>
-        <p className="mt-1 text-sm text-gray-600">Order and manage lunch for your company.</p>
+        <h1 className="text-2xl font-medium text-sort-900">Log in</h1>
+        <p className="mt-1 text-sm text-gra-500">Order and manage lunch for your company.</p>
         <form onSubmit={submit} className="mt-6 space-y-4">
           <Field label="Email">
             <input className={inputCls} type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
@@ -48,8 +48,8 @@ export default function LoginPage() {
             Log in
           </Button>
         </form>
-        <div className="my-6 flex items-center gap-3 text-xs text-gray-400">
-          <span className="h-px flex-1 bg-gray-200" /> or <span className="h-px flex-1 bg-gray-200" />
+        <div className="my-6 flex items-center gap-3 text-xs text-gra-500">
+          <span className="h-px flex-1 bg-gra-300" /> or <span className="h-px flex-1 bg-gra-300" />
         </div>
         <div className="grid gap-2">
           <Button variant="secondary" onClick={() => sso("Microsoft 365")}>
@@ -59,16 +59,16 @@ export default function LoginPage() {
             Continue with Google Workspace <Badge>Later</Badge>
           </Button>
         </div>
-        <p className="mt-6 text-center text-sm text-gray-600">
+        <p className="mt-6 text-center text-sm text-gra-500">
           New customer?{" "}
-          <Link href="/register" className="font-medium text-accent-600 hover:underline">
+          <Link href="/register" className="font-medium text-rosa-700 hover:underline">
             Register your company
           </Link>
         </p>
       </Card>
 
       <Card className="mt-6 w-full max-w-md p-5">
-        <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">Demo accounts</p>
+        <p className="text-xs font-medium uppercase tracking-wide text-gra-500">Demo accounts</p>
         <div className="mt-3 grid gap-1">
           {customers.slice(0, 5).map((c) => (
             <button
@@ -77,10 +77,10 @@ export default function LoginPage() {
                 login(c.id);
                 router.push("/portal");
               }}
-              className="flex items-center justify-between rounded-lg px-3 py-2 text-left text-sm hover:bg-brand-50"
+              className="flex items-center justify-between rounded-lg px-3 py-2 text-left text-sm hover:bg-gra-100"
             >
-              <span className="font-medium text-gray-800">{c.name}</span>
-              <span className="text-xs text-gray-500">{c.segment}</span>
+              <span className="font-medium text-sort-900">{c.name}</span>
+              <span className="text-xs text-gra-500">{c.segment}</span>
             </button>
           ))}
         </div>

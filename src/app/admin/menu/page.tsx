@@ -65,7 +65,7 @@ function MenuEditor({ ws }: { ws: string }) {
       <div className="grid gap-4">
         {WEEKDAYS.map((wd) => (
           <Card key={wd} className="p-5">
-            <p className="mb-4 font-semibold text-gray-900">
+            <p className="mb-4 font-medium text-sort-900">
               {fmtDay(dates[wd])} {holidayName(dates[wd]) && <Badge className="ml-2">Closed · {holidayName(dates[wd])}</Badge>}
             </p>
             <div className="grid gap-6 md:grid-cols-2">
@@ -76,7 +76,7 @@ function MenuEditor({ ws }: { ws: string }) {
                   <div key={slot} className="flex gap-4">
                     <DishImage dish={dish} className="h-24 w-28 shrink-0 rounded-lg" />
                     <div className="min-w-0 flex-1">
-                      <p className="text-xs font-semibold uppercase tracking-wide text-gray-400">{slot === "main" ? "Main dish" : "Vegetarian"}</p>
+                      <p className="text-xs font-medium uppercase tracking-wide text-gra-500">{slot === "main" ? "Main dish" : "Vegetarian"}</p>
                       <select
                         className={`${inputCls} mt-1`}
                         value={options.some((o) => o.id === dish.id) ? dish.id : "custom"}
@@ -92,7 +92,7 @@ function MenuEditor({ ws }: { ws: string }) {
                         ))}
                         {!options.some((o) => o.id === dish.id) && <option value="custom">{dish.name} (edited)</option>}
                       </select>
-                      <p className="mt-1 line-clamp-2 text-xs text-gray-500">Allergens: {dish.allergens.join(", ") || "none"}</p>
+                      <p className="mt-1 line-clamp-2 text-xs text-gra-500">Allergens: {dish.allergens.join(", ") || "none"}</p>
                       <Button variant="ghost" size="sm" className="mt-1 -ml-2" onClick={() => setEditing({ wd, slot, dish: structuredClone(dish) })}>
                         <Pencil className="h-3.5 w-3.5" /> Edit details
                       </Button>
@@ -115,13 +115,13 @@ function MenuEditor({ ws }: { ws: string }) {
               <textarea rows={2} className={inputCls} value={editing.dish.description} onChange={(e) => setEditing({ ...editing, dish: { ...editing.dish, description: e.target.value } })} />
             </Field>
             <div>
-              <p className="text-sm font-medium text-gray-700">Allergens (the 14 regulated allergens)</p>
+              <p className="text-sm font-medium text-sort-700">Allergens (the 14 regulated allergens)</p>
               <div className="mt-2 grid grid-cols-2 gap-1 sm:grid-cols-4">
                 {ALLERGENS.map((a) => (
-                  <label key={a} className="flex items-center gap-2 text-sm capitalize text-gray-700">
+                  <label key={a} className="flex items-center gap-2 text-sm capitalize text-sort-700">
                     <input
                       type="checkbox"
-                      className="rounded text-brand-600"
+                      className="rounded text-sort-700"
                       checked={editing.dish.allergens.includes(a)}
                       onChange={(e) =>
                         setEditing({
@@ -136,13 +136,13 @@ function MenuEditor({ ws }: { ws: string }) {
               </div>
             </div>
             <div>
-              <p className="text-sm font-medium text-gray-700">Labels</p>
+              <p className="text-sm font-medium text-sort-700">Labels</p>
               <div className="mt-2 flex flex-wrap gap-3">
                 {DISH_LABELS.map((l) => (
-                  <label key={l} className="flex items-center gap-2 text-sm text-gray-700">
+                  <label key={l} className="flex items-center gap-2 text-sm text-sort-700">
                     <input
                       type="checkbox"
-                      className="rounded text-brand-600"
+                      className="rounded text-sort-700"
                       checked={editing.dish.labels.includes(l)}
                       onChange={(e) =>
                         setEditing({ ...editing, dish: { ...editing.dish, labels: e.target.checked ? [...editing.dish.labels, l] : editing.dish.labels.filter((x) => x !== l) } })
@@ -159,7 +159,7 @@ function MenuEditor({ ws }: { ws: string }) {
                 <ImagePlus className="h-4 w-4" /> Upload photo
               </Button>
             </div>
-            <div className="flex justify-end gap-2 border-t border-gray-100 pt-4">
+            <div className="flex justify-end gap-2 border-t border-gra-300 pt-4">
               <Button variant="ghost" onClick={() => setEditing(null)}>
                 Cancel
               </Button>

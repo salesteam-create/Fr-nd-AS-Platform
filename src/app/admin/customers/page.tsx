@@ -47,13 +47,13 @@ export default function CustomersPage() {
         >
           Update price
         </Button>
-        <p className="text-sm text-gray-500">Customers with an agreed price keep their own price.</p>
+        <p className="text-sm text-gra-500">Customers with an agreed price keep their own price.</p>
       </Card>
 
       <Card>
-        <div className="border-b border-gray-100 p-4">
+        <div className="border-b border-gra-300 p-4">
           <div className="relative max-w-sm">
-            <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
+            <Search className="absolute left-3 top-2.5 h-4 w-4 text-gra-500" />
             <input className={`${inputCls} pl-9`} placeholder="Search name or org. number" value={q} onChange={(e) => setQ(e.target.value)} />
           </div>
         </div>
@@ -62,13 +62,13 @@ export default function CustomersPage() {
             const p = standingPatternOn(data, c.id, open);
             const rev = customerRevenue(data, c, addDays(today, -30), addDays(today, -1));
             return (
-              <tr key={c.id} className="cursor-pointer hover:bg-gray-50" onClick={() => setSelected(c.id)}>
+              <tr key={c.id} className="cursor-pointer hover:bg-krem" onClick={() => setSelected(c.id)}>
                 <Td>
-                  <p className="font-medium text-gray-900">{c.name}</p>
-                  <p className="text-xs text-gray-500">Org. {c.orgNumber} · Tripletex #{c.tripletexId}</p>
+                  <p className="font-medium text-sort-900">{c.name}</p>
+                  <p className="text-xs text-gra-500">Org. {c.orgNumber} · Tripletex #{c.tripletexId}</p>
                 </Td>
-                <Td className="text-gray-600">{c.segment}</Td>
-                <Td className="tabular-nums">{p ? WEEKDAYS.map((wd) => p[wd].total).join(" / ") : <span className="text-gray-400">None</span>}</Td>
+                <Td className="text-gra-500">{c.segment}</Td>
+                <Td className="tabular-nums">{p ? WEEKDAYS.map((wd) => p[wd].total).join(" / ") : <span className="text-gra-500">None</span>}</Td>
                 <Td className="whitespace-nowrap tabular-nums">
                   {nok(priceFor(c, data))} {c.pricePerPortion !== null && <Badge tone="blue">Agreed</Badge>}
                 </Td>
@@ -88,19 +88,19 @@ export default function CustomersPage() {
           <div className="space-y-5">
             <div className="grid gap-4 text-sm sm:grid-cols-2">
               <div>
-                <p className="text-xs uppercase tracking-wide text-gray-400">Contact</p>
-                <p className="text-gray-900">{sel.contactName}</p>
-                <p className="text-gray-600">{sel.email}</p>
-                <p className="text-gray-600">{sel.phone}</p>
+                <p className="text-xs uppercase tracking-wide text-gra-500">Contact</p>
+                <p className="text-sort-900">{sel.contactName}</p>
+                <p className="text-gra-500">{sel.email}</p>
+                <p className="text-gra-500">{sel.phone}</p>
               </div>
               <div>
-                <p className="text-xs uppercase tracking-wide text-gray-400">Delivery</p>
+                <p className="text-xs uppercase tracking-wide text-gra-500">Delivery</p>
                 {sel.deliveryAddresses.map((a) => (
-                  <p key={a.id} className="text-gray-700">
+                  <p key={a.id} className="text-sort-700">
                     {a.label}: {a.street}, {a.postcode} {a.city}
                   </p>
                 ))}
-                <p className="mt-1 text-gray-500">Customer since {fmtDate(sel.createdAt)}</p>
+                <p className="mt-1 text-gra-500">Customer since {fmtDate(sel.createdAt)}</p>
               </div>
             </div>
             <div className="grid gap-4 sm:grid-cols-3">
@@ -130,7 +130,7 @@ export default function CustomersPage() {
                 </select>
               </Field>
             </div>
-            <div className="flex flex-wrap justify-between gap-2 border-t border-gray-100 pt-4">
+            <div className="flex flex-wrap justify-between gap-2 border-t border-gra-300 pt-4">
               {sel.active ? (
                 <Button
                   variant="danger"

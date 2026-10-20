@@ -7,7 +7,7 @@ export function Hydrated({ children }: { children: ReactNode }) {
   const [ready, setReady] = useState(false);
   useEffect(() => setReady(true), []);
   if (!ready) {
-    return <div className="flex min-h-screen items-center justify-center text-sm text-gray-400">Loading demo…</div>;
+    return <div className="flex min-h-screen items-center justify-center text-sm text-gra-500">Loading demo…</div>;
   }
   return <>{children}</>;
 }

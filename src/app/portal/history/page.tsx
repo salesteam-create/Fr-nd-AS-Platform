@@ -29,7 +29,7 @@ export default function HistoryPage() {
           <Table head={["Invoice", "Period", "Portions", "Total incl. VAT", "Status", ""]}>
             {invoices.map((inv) => (
               <tr key={inv.id}>
-                <Td className="font-medium text-gray-900">{inv.number}</Td>
+                <Td className="font-medium text-sort-900">{inv.number}</Td>
                 <Td>
                   {fmtDate(inv.periodStart)} – {fmtDate(inv.periodEnd)}
                 </Td>
@@ -47,7 +47,7 @@ export default function HistoryPage() {
             ))}
             {invoices.length === 0 && (
               <tr>
-                <Td className="text-gray-500">No invoices yet.</Td>
+                <Td className="text-gra-500">No invoices yet.</Td>
               </tr>
             )}
           </Table>
@@ -62,8 +62,8 @@ export default function HistoryPage() {
               const total = counts.reduce((a, b) => a + b, 0);
               return (
                 <tr key={ws}>
-                  <Td className="whitespace-nowrap font-medium text-gray-900">
-                    Week {weekNumber(ws)} <span className="font-normal text-gray-500">· {fmtDay(ws)}</span>
+                  <Td className="whitespace-nowrap font-medium text-sort-900">
+                    Week {weekNumber(ws)} <span className="font-normal text-gra-500">· {fmtDay(ws)}</span>
                   </Td>
                   {counts.map((c, i) => (
                     <Td key={i} className="tabular-nums">

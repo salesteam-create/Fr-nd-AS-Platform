@@ -35,7 +35,7 @@ export default function SettingsPage() {
                 ))}
               </select>
             </Field>
-            <p className="text-sm text-gray-500">Monday deliveries lock on Friday. Weekends and public holidays are skipped.</p>
+            <p className="text-sm text-gra-500">Monday deliveries lock on Friday. Weekends and public holidays are skipped.</p>
           </div>
         </Card>
         <Card>
@@ -44,7 +44,7 @@ export default function SettingsPage() {
             <Field label="VAT rate (%)" hint="Assumed 15% (food). To be confirmed with Frænd's accountant.">
               <input className={inputCls} inputMode="numeric" value={vat} onChange={(e) => setVat(e.target.value.replace(/\D/g, ""))} />
             </Field>
-            <p className="text-sm text-gray-500">The standard price is managed under Customers & prices.</p>
+            <p className="text-sm text-gra-500">The standard price is managed under Customers & prices.</p>
           </div>
         </Card>
         <Card className="lg:col-span-2">

@@ -33,8 +33,8 @@ export function AdminShell({ children }: { children: ReactNode }) {
   const path = usePathname();
   const isActive = (href: string) => (href === "/admin" ? path === "/admin" : path.startsWith(href));
   return (
-    <div className="min-h-screen bg-gray-50 lg:flex">
-      <aside className="hidden w-64 shrink-0 flex-col bg-brand-900 px-4 py-6 lg:flex print:hidden">
+    <div className="min-h-screen bg-krem lg:flex">
+      <aside className="hidden w-64 shrink-0 flex-col bg-sort-900 px-4 py-6 lg:flex print:hidden">
         <div className="px-2">
           <Logo href="/admin" light sub="Admin" />
         </div>
@@ -45,17 +45,17 @@ export function AdminShell({ children }: { children: ReactNode }) {
               href={href}
               className={cx(
                 "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium",
-                isActive(href) ? "bg-white/10 text-white" : "text-brand-100 hover:bg-white/5 hover:text-white",
+                isActive(href) ? "bg-white/10 text-white" : "text-gra-300 hover:bg-white/5 hover:text-white",
               )}
             >
               <Icon className="h-4 w-4" /> {label}
             </Link>
           ))}
         </nav>
-        <p className="mt-auto px-3 text-xs text-brand-300">Signed in as Frænd admin (demo)</p>
+        <p className="mt-auto px-3 text-xs text-gra-300">Signed in as Frænd admin (demo)</p>
       </aside>
 
-      <header className="bg-brand-900 lg:hidden print:hidden">
+      <header className="bg-sort-900 lg:hidden print:hidden">
         <div className="px-4 py-3">
           <Logo href="/admin" light sub="Admin" />
         </div>
@@ -64,7 +64,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
             <Link
               key={href}
               href={href}
-              className={cx("whitespace-nowrap rounded-md px-3 py-1.5 text-sm", isActive(href) ? "bg-white/15 text-white" : "text-brand-100")}
+              className={cx("whitespace-nowrap rounded-md px-3 py-1.5 text-sm", isActive(href) ? "bg-white/15 text-white" : "text-gra-300")}
             >
               {label}
             </Link>

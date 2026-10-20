@@ -48,11 +48,11 @@ export default function StandingOrderPage() {
   return (
     <div>
       {welcome && (
-        <Card className="mb-6 flex items-start gap-4 bg-brand-50 p-5 ring-brand-200">
-          <PartyPopper className="h-6 w-6 shrink-0 text-accent-500" />
+        <Card className="mb-6 flex items-start gap-4 bg-rosa-100 p-5 ring-gra-300">
+          <PartyPopper className="h-6 w-6 shrink-0 text-rosa-700" />
           <div>
-            <p className="font-semibold text-brand-900">Your account is ready</p>
-            <p className="mt-1 text-sm text-brand-800">
+            <p className="font-medium text-sort-900">Your account is ready</p>
+            <p className="mt-1 text-sm text-sort-900">
               Most companies order the same every week. Set your usual numbers below and we will repeat them automatically. You can still change single days.
             </p>
           </div>
@@ -68,10 +68,10 @@ export default function StandingOrderPage() {
       <div className="grid gap-6 lg:grid-cols-[1fr_20rem]">
         <Card>
           <CardHeader title="Weekly pattern" subtitle="Portions and special diets per weekday" />
-          <div className="divide-y divide-gray-100">
+          <div className="divide-y divide-gra-100">
             {WEEKDAYS.map((wd) => (
               <div key={wd} className="grid gap-3 px-5 py-4 md:grid-cols-[8rem_1fr]">
-                <p className="pt-2 font-medium text-gray-900">{WEEKDAY_LABEL[wd]}</p>
+                <p className="pt-2 font-medium text-sort-900">{WEEKDAY_LABEL[wd]}</p>
                 <DayEditor
                   label={WEEKDAY_LABEL[wd]}
                   value={pattern[wd]}
@@ -85,9 +85,9 @@ export default function StandingOrderPage() {
 
         <div className="space-y-4">
           <Card className="p-5">
-            <p className="text-sm text-gray-500">Per week</p>
-            <p className="mt-1 text-2xl font-semibold tabular-nums text-gray-900">{weekly} portions</p>
-            <p className="text-sm text-gray-600">≈ {nok(weekly * price)} excl. VAT</p>
+            <p className="text-sm text-gra-500">Per week</p>
+            <p className="mt-1 text-2xl font-medium tabular-nums text-sort-900">{weekly} portions</p>
+            <p className="text-sm text-gra-500">≈ {nok(weekly * price)} excl. VAT</p>
             <Field label="Start from" className="mt-4">
               <select className={inputCls} value={from} onChange={(e) => setFrom(e.target.value)}>
                 {startOptions.map((d) => (
@@ -98,7 +98,7 @@ export default function StandingOrderPage() {
                 ))}
               </select>
             </Field>
-            <p className="mt-2 text-xs text-gray-500">Days before this date keep their current orders. One-off changes from this date are replaced.</p>
+            <p className="mt-2 text-xs text-gra-500">Days before this date keep their current orders. One-off changes from this date are replaced.</p>
             <Button className="mt-4 w-full" onClick={save} disabled={invalid || weekly === 0}>
               {current ? "Save standing order" : "Start standing order"}
             </Button>
@@ -108,8 +108,8 @@ export default function StandingOrderPage() {
               </Button>
             )}
           </Card>
-          <Card className="p-5 text-sm text-gray-600">
-            <p className="font-medium text-gray-900">Good to know</p>
+          <Card className="p-5 text-sm text-gra-500">
+            <p className="font-medium text-sort-900">Good to know</p>
             <ul className="mt-2 list-disc space-y-1 pl-4">
               <li>Public holidays are skipped automatically.</li>
               <li>Changes are possible until {hour}:00 the working day before delivery.</li>

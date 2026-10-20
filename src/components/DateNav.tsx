@@ -13,11 +13,11 @@ export function DateNav({ value, onChange, step = 1, mode = "day" }: { value: st
   };
   const label = mode === "week" ? `Week ${weekNumber(value)} · from ${fmtLong(weekStart(value))}` : fmtLong(value);
   return (
-    <div className="inline-flex items-center gap-1 rounded-lg bg-white p-1 ring-1 ring-gray-200">
+    <div className="inline-flex items-center gap-1 rounded-lg bg-white p-1 ring-1 ring-gra-300">
       <Button variant="ghost" size="sm" aria-label="Previous" onClick={() => move(-1)}>
         <ChevronLeft className="h-4 w-4" />
       </Button>
-      <span className="min-w-[12rem] text-center text-sm font-medium text-gray-800">{label}</span>
+      <span className="min-w-[12rem] text-center text-sm font-medium text-sort-900">{label}</span>
       <Button variant="ghost" size="sm" aria-label="Next" onClick={() => move(1)}>
         <ChevronRight className="h-4 w-4" />
       </Button>

@@ -48,7 +48,7 @@ export default function AdminDashboard() {
               </span>
             }
             action={
-              <Link href={`/admin/production?date=${tomorrow}`} className="flex items-center gap-1 text-sm font-medium text-accent-600 hover:underline">
+              <Link href={`/admin/production?date=${tomorrow}`} className="flex items-center gap-1 text-sm font-medium text-rosa-700 hover:underline">
                 Production list <ArrowRight className="h-4 w-4" />
               </Link>
             }
@@ -56,26 +56,26 @@ export default function AdminDashboard() {
           <div className="grid gap-6 p-5 sm:grid-cols-[12rem_1fr]">
             <div className="space-y-4">
               <div>
-                <p className="text-sm text-gray-500">Lunches</p>
-                <p className="text-4xl font-semibold tabular-nums text-gray-900">{tPortions}</p>
+                <p className="text-sm text-gra-500">Lunches</p>
+                <p className="text-4xl font-medium tabular-nums text-sort-900">{tPortions}</p>
               </div>
               <div>
-                <p className="text-sm text-gray-500">Customers</p>
-                <p className="text-2xl font-semibold tabular-nums text-gray-900">{tRows.length}</p>
+                <p className="text-sm text-gra-500">Customers</p>
+                <p className="text-2xl font-medium tabular-nums text-sort-900">{tRows.length}</p>
               </div>
             </div>
             <div>
-              <p className="mb-2 flex items-center gap-2 text-sm font-medium text-gray-700">
-                <ChefHat className="h-4 w-4 text-brand-500" /> Production needs
+              <p className="mb-2 flex items-center gap-2 text-sm font-medium text-sort-700">
+                <ChefHat className="h-4 w-4 text-sort-700" /> Production needs
               </p>
-              <ul className="divide-y divide-gray-100 rounded-lg ring-1 ring-gray-100">
+              <ul className="divide-y divide-gra-100 rounded-lg ring-1 ring-gra-300">
                 {production.map((l) => (
                   <li key={l.key} className="flex items-center justify-between px-3 py-2 text-sm">
-                    <span className={l.dish ? "font-medium text-gray-900" : "text-gray-600"}>{l.label}</span>
-                    <span className="font-semibold tabular-nums">{l.portions}</span>
+                    <span className={l.dish ? "font-medium text-sort-900" : "text-gra-500"}>{l.label}</span>
+                    <span className="font-medium tabular-nums">{l.portions}</span>
                   </li>
                 ))}
-                {production.length === 0 && <li className="px-3 py-2 text-sm text-gray-500">No orders.</li>}
+                {production.length === 0 && <li className="px-3 py-2 text-sm text-gra-500">No orders.</li>}
               </ul>
             </div>
           </div>
@@ -86,20 +86,20 @@ export default function AdminDashboard() {
           <div className="p-5">
             <div className="flex justify-between">
               <div>
-                <p className="text-sm text-gray-500">Lunches ordered</p>
-                <p className="text-2xl font-semibold tabular-nums">{num(nwPortions)}</p>
+                <p className="text-sm text-gra-500">Lunches ordered</p>
+                <p className="text-2xl font-medium tabular-nums">{num(nwPortions)}</p>
               </div>
               <div className="text-right">
-                <p className="text-sm text-gray-500">Revenue forecast</p>
-                <p className="text-2xl font-semibold tabular-nums">{nok(nwRevenue)}</p>
+                <p className="text-sm text-gra-500">Revenue forecast</p>
+                <p className="text-2xl font-medium tabular-nums">{nok(nwRevenue)}</p>
               </div>
             </div>
             <div className="mt-5 flex h-32 items-end gap-2">
               {nw.map((d) => (
                 <div key={d.wd} className="flex flex-1 flex-col items-center gap-1">
-                  <span className="text-xs tabular-nums text-gray-600">{d.portions}</span>
-                  <div className="w-full rounded-t bg-brand-400" style={{ height: `${(d.portions / maxDay) * 90}px` }} />
-                  <span className="text-xs uppercase text-gray-500">{d.wd}</span>
+                  <span className="text-xs tabular-nums text-gra-500">{d.portions}</span>
+                  <div className="w-full rounded-t bg-rosa-500" style={{ height: `${(d.portions / maxDay) * 90}px` }} />
+                  <span className="text-xs uppercase text-gra-500">{d.wd}</span>
                 </div>
               ))}
             </div>
@@ -120,20 +120,20 @@ export default function AdminDashboard() {
           <div className="flex h-56 items-end gap-3 p-5">
             {series.map((s) => (
               <div key={s.month} className="flex flex-1 flex-col items-center gap-1">
-                <span className="text-xs tabular-nums text-gray-600">{Math.round(s.revenue / 1000)}k</span>
-                <div className={s.partial ? "w-full rounded-t bg-accent-400/70" : "w-full rounded-t bg-brand-600"} style={{ height: `${(s.revenue / maxRev) * 150}px` }} />
-                <span className="text-xs text-gray-500">{fmtMonth(s.month).split(" ")[0]}</span>
+                <span className="text-xs tabular-nums text-gra-500">{Math.round(s.revenue / 1000)}k</span>
+                <div className={s.partial ? "w-full rounded-t bg-gull-500" : "w-full rounded-t bg-sort-900"} style={{ height: `${(s.revenue / maxRev) * 150}px` }} />
+                <span className="text-xs text-gra-500">{fmtMonth(s.month).split(" ")[0]}</span>
               </div>
             ))}
           </div>
         </Card>
         <Card>
           <CardHeader title="Best-selling dishes" subtitle="Last 30 days" />
-          <ol className="divide-y divide-gray-50">
+          <ol className="divide-y divide-gra-100">
             {best.map((b, i) => (
               <li key={b.name} className="flex items-center gap-3 px-5 py-2.5 text-sm">
-                <span className="w-5 text-gray-400">{i + 1}</span>
-                <span className="flex-1 text-gray-800">{b.name}</span>
+                <span className="w-5 text-gra-500">{i + 1}</span>
+                <span className="flex-1 text-sort-900">{b.name}</span>
                 <span className="font-medium tabular-nums">{num(b.portions)}</span>
               </li>
             ))}
@@ -145,16 +145,16 @@ export default function AdminDashboard() {
         <CardHeader
           title="Tripletex activity"
           action={
-            <Link href="/admin/invoicing" className="flex items-center gap-1 text-sm font-medium text-accent-600 hover:underline">
+            <Link href="/admin/invoicing" className="flex items-center gap-1 text-sm font-medium text-rosa-700 hover:underline">
               <RefreshCw className="h-4 w-4" /> Invoicing
             </Link>
           }
         />
-        <ul className="divide-y divide-gray-50">
+        <ul className="divide-y divide-gra-100">
           {data.syncLog.slice(0, 5).map((l) => (
             <li key={l.id} className="flex flex-wrap items-center justify-between gap-2 px-5 py-2.5 text-sm">
-              <span className="text-gray-700">{l.message}</span>
-              <span className="text-xs text-gray-400">{fmtDateTime(new Date(l.at))}</span>
+              <span className="text-sort-700">{l.message}</span>
+              <span className="text-xs text-gra-500">{fmtDateTime(new Date(l.at))}</span>
             </li>
           ))}
         </ul>

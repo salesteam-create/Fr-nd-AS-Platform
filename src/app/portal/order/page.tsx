@@ -129,16 +129,16 @@ function WeekEditor({ ws }: { ws: string }) {
           const { source } = effectiveOrder(data, customer.id, d);
           const dirty = changed.includes(wd);
           return (
-            <Card key={wd} className={cx("p-5", isLockedDay && "bg-gray-50", dirty && "ring-2 ring-accent-400")}>
+            <Card key={wd} className={cx("p-5", isLockedDay && "bg-krem", dirty && "ring-2 ring-rosa-500")}>
               <div className="grid gap-4 md:grid-cols-[14rem_1fr]">
                 <div>
                   <div className="flex items-center gap-2">
-                    <p className="font-semibold text-gray-900">{fmtDay(d)}</p>
-                    {isLockedDay && <Lock className="h-4 w-4 text-gray-400" />}
+                    <p className="font-medium text-sort-900">{fmtDay(d)}</p>
+                    {isLockedDay && <Lock className="h-4 w-4 text-gra-500" />}
                   </div>
-                  <p className="mt-1 text-sm text-gray-700">{menu.days[wd].main.name}</p>
-                  <p className="mt-0.5 flex items-start gap-1 text-sm text-gray-500">
-                    <Leaf className="mt-0.5 h-3.5 w-3.5 shrink-0 text-brand-500" /> {menu.days[wd].vegetarian.name}
+                  <p className="mt-1 text-sm text-sort-700">{menu.days[wd].main.name}</p>
+                  <p className="mt-0.5 flex items-start gap-1 text-sm text-gra-500">
+                    <Leaf className="mt-0.5 h-3.5 w-3.5 shrink-0 text-sort-700" /> {menu.days[wd].vegetarian.name}
                   </p>
                   <div className="mt-2 flex flex-wrap gap-1">
                     <DeadlineStatus date={d} now={now} hour={hour} />
@@ -148,7 +148,7 @@ function WeekEditor({ ws }: { ws: string }) {
                   </div>
                 </div>
                 {holidayName(d) ? (
-                  <p className="self-center text-sm text-gray-500">No deliveries on {holidayName(d)}.</p>
+                  <p className="self-center text-sm text-gra-500">No deliveries on {holidayName(d)}.</p>
                 ) : (
                   <DayEditor label={WEEKDAY_LABEL[wd]} value={draft[wd]} onChange={(o) => update(wd, o)} disabled={isLockedDay} />
                 )}
@@ -158,12 +158,12 @@ function WeekEditor({ ws }: { ws: string }) {
         })}
       </div>
 
-      <div className="fixed inset-x-0 bottom-0 z-30 border-t border-gray-200 bg-white/95 backdrop-blur">
+      <div className="fixed inset-x-0 bottom-0 z-30 border-t border-gra-300 bg-white/95 backdrop-blur">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3 sm:pl-48">
           <div>
-            <p className="text-sm text-gray-500">Week total</p>
-            <p className="font-semibold tabular-nums text-gray-900">
-              {total} portions · {nok(total * price)} <span className="text-xs font-normal text-gray-500">excl. VAT ({nok(price)} each)</span>
+            <p className="text-sm text-gra-500">Week total</p>
+            <p className="font-medium tabular-nums text-sort-900">
+              {total} portions · {nok(total * price)} <span className="text-xs font-normal text-gra-500">excl. VAT ({nok(price)} each)</span>
             </p>
           </div>
           <div className="flex gap-2">

@@ -234,7 +234,8 @@ Customer segments named by the client: shared office spaces, commercial building
 
 | System | Purpose | Notes |
 |---|---|---|
-| fraend.no | Entry point for customers | Platform of the existing site is unknown (Q2). Options: link to a subdomain (for example, bestill.fraend.no), or embed. A subdomain is the most robust. |
+| fraend.no | Entry point for customers | The site runs on Wix, which limits deep embedding. Recommended: a branded subdomain (for example, bestill.fraend.no) linked from the site. |
+| app.fraend.no (Cateringportal) | Existing catering ordering portal | Frænd already runs a catering portal for its departments. We need to decide whether corporate lunch extends it, replaces it, or runs beside it (Q12). |
 | Tripletex | Customers, invoices, ledger, reporting | Tripletex has a REST API. Requires an API consumer token and an employee token from Frænd. |
 | EHF / Peppol | Electronic invoices | Normally sent through Tripletex, so no separate integration is expected. |
 | Brønnøysund register | Look up company details by organisation number | Free public API. |
@@ -284,14 +285,14 @@ The demo is a working front-end with realistic mock data. Its goal is to let Fr�
 | A-4 | Deliveries are on weekdays only (Monday to Friday). |
 | A-5 | Pricing is per portion, with optional customer-specific agreements. |
 | A-6 | Frænd has an active Tripletex subscription that includes API access. |
-| A-7 | Frænd provides brand assets (logo, colours, fonts, food photos). The demo uses placeholders until then. |
+| A-7 | The demo uses the Frænd design system (logo, colours, photos). Fonts are stand-ins (Jost, Sacramento) until Frænd supplies the real ones, and dish photos are samples. |
 
 ## 12. Open questions for Frænd
 
 | ID | Question | Why it matters |
 |---|---|---|
 | Q1 | Does the company order total counts, or should each employee choose their own dish? | Biggest single driver of scope and UX |
-| Q2 | What platform is fraend.no built on, and who manages it? | Decides how we integrate with the website |
+| Q2 | Who manages the Wix site (fraend.no), and can we add a link or subdomain? | Decides how customers reach the platform. Platform confirmed as Wix from the design system. |
 | Q3 | Is there a minimum order (portions per day or per delivery)? | Business rule and validation |
 | Q4 | Invoice only, or also card payment for smaller customers? | Payment integration scope |
 | Q5 | Which areas do you deliver to, and is there a delivery fee? | Delivery areas and pricing |
@@ -301,6 +302,7 @@ The demo is a working front-end with realistic mock data. Its goal is to let Fr�
 | Q9 | What is today's daily volume, and what is the target in 12 months? | Sizing and hosting |
 | Q10 | Is a fully custom platform preferred, or would a configured standard solution be acceptable if it meets the requirements? | The spec asks for both; this decides approach, price and timeline |
 | Q11 | What is the target launch date? | Phasing and resourcing |
+| Q12 | How should corporate lunch relate to the existing Cateringportal (app.fraend.no): extend it, replace it, or run beside it? | Affects scope, login, menus and data migration |
 
 ## 13. Risks
 

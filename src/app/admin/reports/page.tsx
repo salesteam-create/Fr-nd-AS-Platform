@@ -68,14 +68,14 @@ export default function ReportsPage() {
           <div className="space-y-2 p-5">
             {series.map((s) => (
               <div key={s.month} className="grid grid-cols-[5rem_1fr_7rem] items-center gap-3 text-sm">
-                <span className="text-gray-600">{fmtMonth(s.month)}</span>
-                <div className="h-5 rounded bg-gray-100">
-                  <div className={s.partial ? "h-5 rounded bg-accent-400/70" : "h-5 rounded bg-brand-600"} style={{ width: `${(s.revenue / maxRev) * 100}%` }} />
+                <span className="text-gra-500">{fmtMonth(s.month)}</span>
+                <div className="h-5 rounded bg-gra-100">
+                  <div className={s.partial ? "h-5 rounded bg-gull-500" : "h-5 rounded bg-sort-900"} style={{ width: `${(s.revenue / maxRev) * 100}%` }} />
                 </div>
-                <span className="text-right tabular-nums text-gray-900">{nok(s.revenue)}</span>
+                <span className="text-right tabular-nums text-sort-900">{nok(s.revenue)}</span>
               </div>
             ))}
-            <p className="pt-2 text-xs text-gray-500">Current month is to date.</p>
+            <p className="pt-2 text-xs text-gra-500">Current month is to date.</p>
           </div>
         </Card>
 
@@ -93,7 +93,7 @@ export default function ReportsPage() {
               .sort((a, b) => b[1].portions - a[1].portions)
               .map(([area, v]) => (
                 <tr key={area}>
-                  <Td className="font-medium text-gray-900">{area}</Td>
+                  <Td className="font-medium text-sort-900">{area}</Td>
                   <Td className="tabular-nums">{num(v.stops)}</Td>
                   <Td className="tabular-nums">{num(v.portions)}</Td>
                   <Td className="tabular-nums">{totalPortions ? Math.round((v.portions / totalPortions) * 100) : 0}%</Td>
@@ -119,7 +119,7 @@ export default function ReportsPage() {
           <Table head={["Customer", "Deliveries", "Lunches", "Avg. per delivery", "Revenue", "Share"]}>
             {customers.map((c) => (
               <tr key={c.name}>
-                <Td className="font-medium text-gray-900">{c.name}</Td>
+                <Td className="font-medium text-sort-900">{c.name}</Td>
                 <Td className="tabular-nums">{num(c.days)}</Td>
                 <Td className="tabular-nums">{num(c.portions)}</Td>
                 <Td className="tabular-nums">{(c.portions / c.days).toFixed(1)}</Td>
@@ -132,8 +132,8 @@ export default function ReportsPage() {
 
         <Card className="flex items-start gap-3 p-5 xl:col-span-2">
           <Info className="mt-0.5 h-5 w-5 shrink-0 text-sky-600" />
-          <div className="text-sm text-gray-600">
-            <p className="font-medium text-gray-900">Customer profitability</p>
+          <div className="text-sm text-gra-500">
+            <p className="font-medium text-sort-900">Customer profitability</p>
             <p className="mt-1">Planned for a later phase. It needs cost per portion and delivery cost per area, which Frænd would provide (BRD Q8).</p>
           </div>
         </Card>

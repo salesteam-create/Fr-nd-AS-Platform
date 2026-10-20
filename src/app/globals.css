@@ -2,12 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Frænd design system: warm cream page, sort text, rosa focus. */
 body {
-  @apply bg-cream-100 text-gray-900 antialiased;
+  @apply bg-krem font-sans text-sort-700 antialiased;
+  font-size: 16px;
+}
+
+::selection {
+  background: #ffc9db;
 }
 
 @media print {
   body {
     background: white;
   }
+}
+
+/* Lucide icons at 1.5px stroke, per the design system. */
+.lucide {
+  stroke-width: 1.5;
 }

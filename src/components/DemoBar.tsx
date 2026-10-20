@@ -30,7 +30,7 @@ export function DemoBar() {
     return (
       <button
         onClick={() => setOpen(true)}
-        className="fixed bottom-24 left-4 z-40 flex items-center gap-2 rounded-full sm:bottom-4 bg-gray-900 px-4 py-2 text-xs font-medium text-white shadow-lg print:hidden"
+        className="fixed bottom-24 left-4 z-40 flex items-center gap-2 rounded-full sm:bottom-4 bg-sort-900 px-4 py-2 text-xs font-medium text-white shadow-card print:hidden"
       >
         <FlaskConical className="h-4 w-4" />
         Demo
@@ -41,20 +41,20 @@ export function DemoBar() {
 
   const btn = "rounded-md bg-white/10 px-2.5 py-1.5 text-xs font-medium hover:bg-white/20";
   return (
-    <div className="fixed bottom-4 left-4 right-4 z-40 max-w-md rounded-2xl bg-gray-900 p-4 text-white shadow-2xl sm:right-auto print:hidden">
+    <div className="fixed bottom-4 left-4 right-4 z-40 max-w-md rounded-2xl bg-sort-900 p-4 text-white shadow-card sm:right-auto print:hidden">
       <div className="flex items-center justify-between">
-        <p className="flex items-center gap-2 text-sm font-semibold">
+        <p className="flex items-center gap-2 text-sm font-medium">
           <FlaskConical className="h-4 w-4" /> Demo controls
         </p>
         <button onClick={() => setOpen(false)} aria-label="Close demo controls" className="rounded p-1 hover:bg-white/10">
           <X className="h-4 w-4" />
         </button>
       </div>
-      <p className="mt-3 flex items-center gap-2 text-xs text-gray-300">
+      <p className="mt-3 flex items-center gap-2 text-xs text-gra-300">
         <Clock className="h-3.5 w-3.5" /> Demo clock
         {offset !== 0 && <span className="rounded bg-amber-400/20 px-1.5 text-amber-300">shifted</span>}
       </p>
-      <p className="text-lg font-semibold tabular-nums">{fmtDateTime(now)}</p>
+      <p className="text-lg font-medium tabular-nums">{fmtDateTime(now)}</p>
       <div className="mt-2 flex flex-wrap gap-1.5">
         <button className={btn} onClick={() => shift(-HOUR)}>−1 h</button>
         <button className={btn} onClick={() => shift(HOUR)}>+1 h</button>

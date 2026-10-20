@@ -1,12 +1,13 @@
 import Link from "next/link";
+import { asset } from "@/lib/asset";
 import { cx } from "./ui";
 
-// Placeholder wordmark until Frænd's logo is supplied.
-export function Logo({ href = "/", light, sub }: { href?: string; light?: boolean; sub?: string }) {
+export function Logo({ href = "/", light, sub, width = 110 }: { href?: string; light?: boolean; sub?: string; width?: number }) {
   return (
-    <Link href={href} className="flex items-baseline gap-2">
-      <span className={cx("font-serif text-2xl font-bold tracking-[0.18em]", light ? "text-cream-50" : "text-brand-800")}>FRÆND</span>
-      {sub && <span className={cx("text-xs font-medium uppercase tracking-wider", light ? "text-brand-200" : "text-accent-500")}>{sub}</span>}
+    <Link href={href} className="flex items-center gap-3">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={asset("/brand/fraend-logo.png")} alt="Frænd" style={{ width }} className="h-auto" />
+      {sub && <span className={cx("text-[11px] font-medium uppercase tracking-caps", light ? "text-gra-300" : "text-gra-500")}>{sub}</span>}
     </Link>
   );
 }

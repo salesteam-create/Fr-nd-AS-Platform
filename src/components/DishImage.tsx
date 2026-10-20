@@ -1,21 +1,17 @@
-import { Salad, UtensilsCrossed } from "lucide-react";
+import { asset } from "@/lib/asset";
 import type { Dish } from "@/lib/types";
 import { cx } from "./ui";
 
-// Placeholder food photo: a coloured tile derived from the dish. Replace with real photos later.
+// Sample food photos from the design system until each dish has its own photo.
+const PHOTOS = ["/brand/photo-01.jpg", "/brand/photo-02.jpg"];
+
 export function DishImage({ dish, className }: { dish: Dish; className?: string }) {
-  const veg = dish.labels.includes("vegetarian");
-  const Icon = veg ? Salad : UtensilsCrossed;
+  const n = [...dish.id].reduce((s, ch) => s + ch.charCodeAt(0), 0);
   return (
-    <div
-      className={cx("relative flex items-center justify-center overflow-hidden", className)}
-      style={{
-        background: `linear-gradient(135deg, hsl(${dish.hue} 55% 78%), hsl(${(dish.hue + 30) % 360} 45% 62%))`,
-      }}
-      aria-hidden
-    >
-      <Icon className="h-1/3 w-1/3 text-white/80" strokeWidth={1.5} />
-      <span className="absolute bottom-1 right-2 text-[10px] font-medium uppercase tracking-wide text-white/70">Photo</span>
+    <div className={cx("relative overflow-hidden bg-gra-100", className)}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={asset(PHOTOS[n % PHOTOS.length])} alt="" className="absolute inset-0 h-full w-full object-cover" style={{ objectPosition: n % 2 ? "50% 40%" : "50% 60%" }} />
+      <span className="absolute bottom-1 right-1 bg-white/85 px-1.5 text-[9px] font-medium uppercase tracking-caps text-gra-500">Sample photo</span>
     </div>
   );
 }

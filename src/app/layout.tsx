@@ -12,12 +12,19 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#1f3d2d",
+  themeColor: "#141414",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <head>
+        {/* Design system fonts: Jost (stand-in for Futura) and Sacramento (script accent). */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
+        <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Sacramento&display=swap" rel="stylesheet" />
+      </head>
       <body>
         <Hydrated>
           {children}

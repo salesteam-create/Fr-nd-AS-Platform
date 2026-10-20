@@ -51,7 +51,7 @@ The dark **Demo** button (bottom left) opens demo controls:
 
 ## Notes
 
-- Styled with the Frænd design system: tokens in `tailwind.config.ts`, logo, tagline and photos in `public/brand/`. Fonts are Google Fonts stand-ins (Jost, Sacramento) and dish photos are samples until Frænd supplies real ones.
+- Styled with the Frænd design system: tokens in `tailwind.config.ts`, logo, tagline and photos in `public/brand/`. Fonts are Google Fonts stand-ins (Jost, Sacramento). Each dish has an illustrative photo in `public/dishes/<dish id>.jpg` (labelled "Sample photo"); swap in Frænd's own photos with the same file names.
 - English and Norwegian (bokmål): use the EN / NO toggle in the header, or open any page with `?lang=no` (for example https://salesteam-create.github.io/Fr-nd-AS-Platform/?lang=no). The choice is remembered. Translations live inline as `t("English", "Norsk")`; shared labels are in `src/lib/i18n.ts`. The Norwegian copy has not been proofread by Frænd yet.
 - Next steps and remaining features: [`docs/ROADMAP.md`](docs/ROADMAP.md).
 - Times follow the viewer's browser time zone.

@@ -107,5 +107,5 @@ These are fine for a demo, but each needs fixing in v1 (covered above):
 - Tripletex, email, EHF and the company register lookup are simulated.
 - Deliveries always go to the company's first address.
 - The VAT rate (15%) and standard price (149 kr) are placeholders.
-- Fonts are stand-ins (Jost, Sacramento) and dish photos are samples.
+- Fonts are stand-ins (Jost, Sacramento), and dish photos are illustrative, not Frænd's own food.
 - Times follow the viewer's browser time zone, not Norway's.

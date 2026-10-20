@@ -3,16 +3,18 @@
 import { useEffect, useState } from "react";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { addDays, setDateLocale, toISO } from "./dates";
-import { buildInvoice, firstOpenDate, getMenu } from "./logic";
+import { addDays, setClosures, setDateLocale, toISO } from "./dates";
+import { buildInvoice, effectiveOrder, firstOpenDate, getMenu } from "./logic";
 import { createSeed } from "./seed";
-import type { Customer, DayOrder, DemoData, Settings, WeekMenu, WeekPattern } from "./types";
+import type { Customer, DayOrder, DemoData, Settings, SimEmail, WeekMenu, WeekPattern } from "./types";
 
 export interface Toast {
   id: number;
   title: string;
   body?: string;
   kind?: "success" | "info" | "error";
+  /** Optional link to open a simulated email from the toast */
+  emailId?: string;
 }
 
 interface DemoState extends DemoData {
@@ -21,6 +23,15 @@ interface DemoState extends DemoData {
   toasts: Toast[];
   lang: "en" | "no";
   setLang: (lang: "en" | "no") => void;
+
+  // simulated email, closures, driver
+  openEmailId: string | null;
+  openEmail: (id: string | null) => void;
+  /** Records a simulated email and returns its id */
+  sendEmail: (e: Omit<SimEmail, "id" | "at" | "to"> & { to?: string }) => string;
+  addClosure: (date: string, reason: string) => number;
+  removeClosure: (date: string) => void;
+  toggleDelivered: (date: string, customerId: string) => void;
 
   // demo controls
   setClockOffset: (ms: number) => void;
@@ -50,14 +61,48 @@ let toastSeq = 1;
 export const nowFrom = (offset: number) => new Date(Date.now() + offset);
 
 const seedState = (): DemoData => createSeed(toISO(new Date()));
+const initialSeed = seedState();
+setClosures(initialSeed.closures);
 
 export const useDemo = create<DemoState>()(
   persist(
     (set, get) => ({
-      ...seedState(),
+      ...initialSeed,
       clockOffsetMs: 0,
       currentCustomerId: null,
       toasts: [],
+      openEmailId: null,
+      openEmail: (id) => set({ openEmailId: id }),
+      sendEmail: (e) => {
+        const s = get();
+        const id = `mail-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`;
+        const to = e.to ?? s.customers.find((c) => c.id === e.customerId)?.email ?? "";
+        set({ emails: [{ ...e, id, to, at: nowFrom(s.clockOffsetMs).toISOString() }, ...s.emails].slice(0, 100) });
+        return id;
+      },
+      addClosure: (date, reason) => {
+        const s = get();
+        // Notify every customer with a delivery that day, before the day is closed.
+        const affected = s.customers
+          .map((c) => ({ c, order: effectiveOrder(s, c.id, date).order }))
+          .filter((x) => x.order);
+        const closures = { ...s.closures, [date]: reason };
+        setClosures(closures);
+        set({ closures });
+        for (const { c, order } of affected) get().sendEmail({ customerId: c.id, kind: "closure_notice", date, reason, portions: order!.total });
+        return affected.length;
+      },
+      removeClosure: (date) => {
+        const closures = { ...get().closures };
+        delete closures[date];
+        setClosures(closures);
+        set({ closures });
+      },
+      toggleDelivered: (date, customerId) =>
+        set((s) => {
+          const list = s.delivered[date] ?? [];
+          return { delivered: { ...s.delivered, [date]: list.includes(customerId) ? list.filter((x) => x !== customerId) : [...list, customerId] } };
+        }),
       lang: "en",
       setLang: (lang) => {
         setDateLocale(lang);
@@ -65,7 +110,11 @@ export const useDemo = create<DemoState>()(
       },
 
       setClockOffset: (ms) => set({ clockOffsetMs: ms }),
-      resetDemo: () => set({ ...seedState(), clockOffsetMs: 0, currentCustomerId: null }), // keeps the chosen language
+      resetDemo: () => {
+        const seed = seedState();
+        setClosures(seed.closures);
+        set({ ...seed, clockOffsetMs: 0, currentCustomerId: null, openEmailId: null }); // keeps the chosen language
+      },
       notify: (t) => {
         const id = toastSeq++;
         set((s) => ({ toasts: [...s.toasts, { ...t, id }] }));
@@ -212,12 +261,17 @@ export const useDemo = create<DemoState>()(
     }),
     {
       name: "fraend-demo-v1",
+      // Older saved demos lack the newer fields; the shallow merge keeps the seeded defaults for them.
       onRehydrateStorage: () => (state) => {
-        if (state) setDateLocale(state.lang);
+        if (state) {
+          setDateLocale(state.lang);
+          setClosures(state.closures ?? {});
+        }
       },
       partialize: (s) => {
-        const { toasts, ...rest } = s;
+        const { toasts, openEmailId, ...rest } = s;
         void toasts;
+        void openEmailId;
         return rest;
       },
     },

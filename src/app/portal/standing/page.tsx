@@ -18,6 +18,7 @@ export default function StandingOrderPage() {
   const data = useDemo();
   const setStanding = useDemo((s) => s.setStandingOrder);
   const notify = useDemo((s) => s.notify);
+  const sendEmail = useDemo((s) => s.sendEmail);
   const now = useNow();
   const hour = data.settings.deadlineHour;
   const open = firstOpenDate(now, hour);
@@ -39,18 +40,22 @@ export default function StandingOrderPage() {
 
   const save = () => {
     setStanding(customer.id, from, pattern);
+    const emailId = sendEmail({ customerId: customer.id, kind: "standing_confirmation", from, pattern: WEEKDAYS.map((wd) => pattern[wd].total) });
     notify({
+      emailId,
       title: current ? t("Standing order updated", "Fast bestilling er oppdatert") : t("Standing order created", "Fast bestilling er opprettet"),
       body: t(
-        `Repeats every week from ${fmtLong(from)}. Confirmation sent by email (simulated).`,
-        `Gjentas hver uke fra ${fmtLong(from)}. Bekreftelse er sendt på e-post (simulert).`,
+        `Repeats every week from ${fmtLong(from)}. Confirmation sent by email.`,
+        `Gjentas hver uke fra ${fmtLong(from)}. Bekreftelse er sendt på e-post.`,
       ),
     });
     setWelcome(false);
   };
   const pause = () => {
     setStanding(customer.id, from, null);
+    const emailId = sendEmail({ customerId: customer.id, kind: "standing_confirmation", from, pattern: null });
     notify({
+      emailId,
       kind: "info",
       title: t("Standing order paused", "Fast bestilling er satt på pause"),
       body: t(

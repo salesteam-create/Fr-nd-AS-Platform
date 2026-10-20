@@ -8,6 +8,7 @@ import {
   FileText,
   LayoutDashboard,
   Settings,
+  Smartphone,
   Truck,
   Users,
 } from "lucide-react";
@@ -23,6 +24,7 @@ const NAV = [
   { href: "/admin", en: "Dashboard", no: "Dashbord", icon: LayoutDashboard },
   { href: "/admin/production", en: "Production & packing", no: "Produksjon og pakking", icon: ChefHat },
   { href: "/admin/delivery", en: "Delivery", no: "Levering", icon: Truck },
+  { href: "/driver", en: "Driver view", no: "Sjåførvisning", icon: Smartphone },
   { href: "/admin/orders", en: "Orders", no: "Bestillinger", icon: ClipboardList },
   { href: "/admin/menu", en: "Menus", no: "Menyer", icon: CalendarDays },
   { href: "/admin/customers", en: "Customers & prices", no: "Kunder og priser", icon: Users },

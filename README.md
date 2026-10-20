@@ -33,6 +33,11 @@ To preview the export locally under the same sub-path: `PAGES_BASE_PATH=/Fr-nd-A
 - Menu planning and publishing, customers and prices, settings (deadline, VAT, delivery areas)
 - Invoicing: build invoices from delivered orders, send to Tripletex (simulated), ledger sync, sync log
 - Reports: revenue per month and per customer, delivery by area, CSV export
+- Closure days (Settings): close a day, see who is affected, and notify them; standing orders skip it and customers see a notice
+
+**Driver view** (`/driver`, phone-first): the day's stops by area, call and map buttons, mark as delivered, progress
+
+**Simulated emails**: order confirmations, standing order changes, welcome, Frænd changes and closure notices. Open them from the toast ("View email") or the Demo panel ("Sent emails").
 
 ## Demo controls
 
@@ -48,6 +53,8 @@ The dark **Demo** button (bottom left) opens demo controls:
 3. Open **Frænd admin → Production & packing**: the numbers have updated.
 4. Use **Demo → 2 min before next deadline**, then **+5 min**: the day locks for the customer, and the production list shows as final.
 5. **Invoicing & Tripletex**: create draft invoices for last month, then send them to Tripletex.
+6. **Settings → Closure days**: close a day next week and open one of the notice emails from the Demo panel.
+7. Open `/driver` on a phone and tick off a few stops.
 
 ## Notes
 

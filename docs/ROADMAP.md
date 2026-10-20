@@ -48,13 +48,13 @@ Goal: a live, secure system Frænd can run daily, with real data and Tripletex.
 
 ### 2. Ordering rules (M)
 - Server-side change deadline, with Frænd override (FR-40 to FR-43).
-- Holidays and closure days managed by Frænd, with notice to standing order customers (FR-34).
+- Holidays and closure days managed by Frænd, with notice to standing order customers (FR-34). Shown in the demo; v1 needs the real emails and server-side rules.
 - Delivery per address: the demo always delivers to the first address. v1 lets a company pick the address per order day (FR-06).
 - Minimum order and delivery fee rules, once decided (Q3, Q5).
 - Registration approval before the first order (FR-07).
 
 ### 3. Notifications (S)
-- Emails for registration, order confirmation, order change, and invoice sent (FR-24).
+- Emails for registration, order confirmation, order change, and invoice sent (FR-24). The demo shows the content as previews; v1 sends them through an email provider.
 - Optional reminder before the deadline ("Your order for tomorrow locks at 12:00").
 
 ### 4. Tripletex integration (L)
@@ -66,7 +66,7 @@ Goal: a live, secure system Frænd can run daily, with real data and Tripletex.
 
 ### 5. Operations tools (M)
 - PDF export and print layouts for production, packing and delivery lists (FR-53).
-- Driver view of the delivery list on a phone, grouped by area (FR-61, FR-62).
+- Driver view of the delivery list on a phone, grouped by area (FR-61, FR-62). Shown in the demo; v1 adds driver login and real delivery status for Frænd.
 - Excel export of reports in addition to CSV (FR-114).
 - Menu photo upload and scheduled menu publishing (FR-13).
 

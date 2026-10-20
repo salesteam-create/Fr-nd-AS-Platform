@@ -1,12 +1,13 @@
 "use client";
 
-import { Clock, FlaskConical, RotateCcw, X } from "lucide-react";
+import { Clock, FlaskConical, Mail, RotateCcw, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import { deadlineFor, fmtDateTime } from "@/lib/dates";
+import { deadlineFor, fmtDateTime, fmtTime } from "@/lib/dates";
 import { useT } from "@/lib/i18n";
 import { firstOpenDate } from "@/lib/logic";
 import { useDemo, useNow } from "@/lib/store";
+import { emailSubject } from "./EmailPreview";
 import { LangToggle } from "./LangToggle";
 import { cx } from "./ui";
 
@@ -21,6 +22,9 @@ export function DemoBar() {
   const reset = useDemo((s) => s.resetDemo);
   const hour = useDemo((s) => s.settings.deadlineHour);
   const notify = useDemo((s) => s.notify);
+  const emails = useDemo((s) => s.emails);
+  const customers = useDemo((s) => s.customers);
+  const openEmail = useDemo((s) => s.openEmail);
   const { t } = useT();
 
   const shift = (ms: number) => setOffset(offset + ms);
@@ -68,6 +72,27 @@ export function DemoBar() {
         <button className={btn} onClick={jumpToDeadline}>{t("2 min before next deadline", "2 min før neste frist")}</button>
         <button className={btn} onClick={() => shift(5 * 60_000)}>+5 min</button>
         <button className={btn} onClick={() => setOffset(0)}>{t("Real time", "Sanntid")}</button>
+      </div>
+      <div className="mt-4 border-t border-white/10 pt-3">
+        <p className="flex items-center gap-2 text-xs text-gra-300">
+          <Mail className="h-3.5 w-3.5" /> {t(`Sent emails (${emails.length})`, `Sendte e-poster (${emails.length})`)}
+        </p>
+        {emails.length === 0 ? (
+          <p className="mt-1 text-xs text-gra-500">{t("None yet. Save an order to send a confirmation.", "Ingen ennå. Lagre en bestilling for å sende en bekreftelse.")}</p>
+        ) : (
+          <ul className="mt-1 max-h-40 overflow-y-auto">
+            {emails.slice(0, 5).map((e) => (
+              <li key={e.id}>
+                <button onClick={() => openEmail(e.id)} className="flex w-full items-baseline justify-between gap-2 rounded px-1 py-1 text-left text-xs hover:bg-white/10">
+                  <span className="min-w-0 truncate">
+                    {emailSubject(e, t)} <span className="text-gra-500">· {customers.find((c) => c.id === e.customerId)?.name}</span>
+                  </span>
+                  <span className="shrink-0 tabular-nums text-gra-500">{fmtTime(new Date(e.at))}</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
       <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-white/10 pt-3 text-xs">
         <Link href="/portal" className={btn}>{t("Customer portal", "Kundeportal")}</Link>

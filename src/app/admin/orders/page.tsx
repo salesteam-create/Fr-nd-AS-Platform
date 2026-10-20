@@ -15,6 +15,7 @@ export default function OrdersPage() {
   const data = useDemo();
   const setDayOrders = useDemo((s) => s.setDayOrders);
   const notify = useDemo((s) => s.notify);
+  const sendEmail = useDemo((s) => s.sendEmail);
   const { t } = useT();
   const now = useNow();
   const hour = data.settings.deadlineHour;
@@ -27,11 +28,14 @@ export default function OrdersPage() {
 
   const save = () => {
     if (!edit) return;
+    const before = effectiveOrder(data, edit.customerId, edit.date).order?.total ?? 0;
     setDayOrders(edit.customerId, { [edit.date]: edit.order.total > 0 ? edit.order : null });
     const c = data.customers.find((x) => x.id === edit.customerId);
+    const emailId = sendEmail({ customerId: edit.customerId, kind: "fraend_change", changes: [{ date: edit.date, before, after: edit.order.total }] });
     notify({
       title: t("Order updated by Frænd", "Bestilling endret av Frænd"),
-      body: `${c?.name}, ${fmtLong(edit.date)}: ${edit.order.total} ${t("portions. Customer notified (simulated).", "porsjoner. Kunden er varslet (simulert).")}`,
+      body: `${c?.name}, ${fmtLong(edit.date)}: ${edit.order.total} ${t("portions. Customer notified by email.", "porsjoner. Kunden er varslet på e-post.")}`,
+      emailId,
     });
     setEdit(null);
   };

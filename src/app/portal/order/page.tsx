@@ -46,6 +46,7 @@ function WeekEditor({ ws }: { ws: string }) {
   const data = useDemo();
   const setDayOrders = useDemo((s) => s.setDayOrders);
   const notify = useDemo((s) => s.notify);
+  const sendEmail = useDemo((s) => s.sendEmail);
   const now = useNow();
   const hour = data.settings.deadlineHour;
   const today = toISO(now);
@@ -78,12 +79,15 @@ function WeekEditor({ ws }: { ws: string }) {
     const lockedOut = changed.filter((wd) => !stillOpen.includes(wd));
     if (stillOpen.length) {
       setDayOrders(customer.id, Object.fromEntries(stillOpen.map((wd) => [dates[wd], draft[wd].total > 0 ? draft[wd] : null])));
+      const emailId = sendEmail({
+        customerId: customer.id,
+        kind: "order_confirmation",
+        changes: stillOpen.map((wd) => ({ date: dates[wd], before: saved[wd].total, after: draft[wd].total })),
+      });
       notify({
         title: t("Order updated", "Bestillingen er oppdatert"),
-        body: t(
-          `${days(stillOpen)} saved. Confirmation sent to ${customer.email} (simulated).`,
-          `${days(stillOpen)} er lagret. Bekreftelse er sendt til ${customer.email} (simulert).`,
-        ),
+        body: t(`${days(stillOpen)} saved. Confirmation sent to ${customer.email}.`, `${days(stillOpen)} er lagret. Bekreftelse er sendt til ${customer.email}.`),
+        emailId,
       });
     }
     if (lockedOut.length) {

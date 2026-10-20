@@ -145,6 +145,10 @@ export function createSeed(todayIso: string): DemoData {
     nextInvoiceNumber: 10001,
     nextTripletexCustomerId: 10450 + SEEDS.length,
     nextTripletexInvoiceId: 88001,
+    // One example closure day about three weeks out.
+    closures: { [addDays(thisWeek, 7 * 3 + 4)]: "Staff day / Personaldag" },
+    emails: [],
+    delivered: {},
   };
 
   // Invoice history up to two periods back; the latest closed period is left for the demo.

@@ -2,6 +2,7 @@
 
 import { Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
+import { ClosureDays } from "@/components/ClosureDays";
 import { Button, Card, CardHeader, Field, PageHeader, inputCls } from "@/components/ui";
 import { useT } from "@/lib/i18n";
 import { useDemo } from "@/lib/store";
@@ -37,7 +38,7 @@ export default function SettingsPage() {
                 ))}
               </select>
             </Field>
-            <p className="text-sm text-gra-500">{t("Monday deliveries lock on Friday. Weekends and public holidays are skipped.", "Leveranser på mandag låses på fredag. Helger og helligdager hoppes over.")}</p>
+            <p className="text-sm text-gra-500">{t("Monday deliveries lock on Friday. Weekends, public holidays and closure days are skipped.", "Leveranser på mandag låses på fredag. Helger, helligdager og stengte dager hoppes over.")}</p>
           </div>
         </Card>
         <Card>
@@ -49,6 +50,7 @@ export default function SettingsPage() {
             <p className="text-sm text-gra-500">{t("The standard price is managed under Customers & prices.", "Standardprisen styres under Kunder og priser.")}</p>
           </div>
         </Card>
+        <ClosureDays />
         <Card className="lg:col-span-2">
           <CardHeader
             title={t("Delivery areas", "Leveringsområder")}

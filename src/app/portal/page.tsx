@@ -1,11 +1,11 @@
 "use client";
 
-import { ArrowRight, CalendarDays, FileText, Repeat, Truck } from "lucide-react";
+import { ArrowRight, CalendarDays, CalendarOff, FileText, Repeat, Truck } from "lucide-react";
 import Link from "next/link";
 import { DeadlineStatus } from "@/components/DeadlineStatus";
 import { DishImage } from "@/components/DishImage";
 import { Badge, Card, CardHeader, PageHeader } from "@/components/ui";
-import { addDays, fmtDate, fmtDay, fmtLong, toISO, weekDates, weekStart, weekdayOf } from "@/lib/dates";
+import { addDays, fmtDate, fmtDay, fmtLong, holidayName, toISO, weekDates, weekStart, weekdayOf } from "@/lib/dates";
 import { effectiveOrder, firstOpenDate, getMenu, nok, priceFor, standingPatternOn } from "@/lib/logic";
 import { useCurrentCustomer, useDemo, useNow } from "@/lib/store";
 import { WEEKDAYS } from "@/lib/types";
@@ -34,11 +34,36 @@ export default function PortalHome() {
   const dates = weekDates(ws);
   const weekTotal = WEEKDAYS.reduce((s, wd) => s + (effectiveOrder(data, customer.id, dates[wd]).order?.total ?? 0), 0);
   const standing = standingPatternOn(data, customer.id, open);
+  // Upcoming closed days that would otherwise have had a delivery for this customer.
+  const closedAhead: { date: string; reason: string; portions: number }[] = [];
+  for (let d = today, i = 0; i < 28; d = addDays(d, 1), i++) {
+    const wd = weekdayOf(d);
+    const reason = holidayName(d);
+    if (!wd || !reason) continue;
+    const ov = data.overrides[customer.id]?.[d];
+    const would = ov !== undefined ? ov?.total ?? 0 : standingPatternOn(data, customer.id, d)?.[wd].total ?? 0;
+    if (would > 0) closedAhead.push({ date: d, reason, portions: would });
+  }
   const invoices = data.invoices.filter((i) => i.customerId === customer.id).sort((a, b) => b.number - a.number);
 
   return (
     <div>
       <PageHeader title={t(`Hi, ${customer.contactName.split(" ")[0]}`, `Hei, ${customer.contactName.split(" ")[0]}`)} subtitle={`${customer.name} · ${customer.deliveryAddresses[0]?.street}`} />
+
+      {closedAhead.length > 0 && (
+        <div className="mb-6 flex items-start gap-3 bg-gull-100 p-4 ring-1 ring-gull-300">
+          <CalendarOff className="mt-0.5 h-5 w-5 shrink-0 text-gull-700" />
+          <div className="text-sm text-sort-700">
+            {closedAhead.map((c) => (
+              <p key={c.date}>
+                <span className="font-medium text-sort-900">{t(`No delivery ${fmtLong(c.date)}`, `Ingen levering ${fmtLong(c.date)}`)}</span> · {c.reason}.{" "}
+                {t(`Your ${c.portions} portions are skipped automatically.`, `Dine ${c.portions} porsjoner hoppes over automatisk.`)}
+              </p>
+            ))}
+            <p className="mt-1 text-gra-500">{t("Your standing order continues as normal afterwards. No action needed.", "Den faste bestillingen fortsetter som normalt etterpå. Du trenger ikke gjøre noe.")}</p>
+          </div>
+        </div>
+      )}
 
       <div className="grid gap-6 lg:grid-cols-3">
         <Card className="overflow-hidden lg:col-span-2">

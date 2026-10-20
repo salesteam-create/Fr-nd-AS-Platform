@@ -93,8 +93,28 @@ const HOLIDAYS_NO: Record<string, string> = {
   "2027-05-17": "Grunnlovsdagen / andre pinsedag",
 };
 
-export function holidayName(iso: string): string | null {
+// Frænd's own closure days (date -> reason), kept in sync from the store via setClosures.
+let closures: Record<string, string> = {};
+export function setClosures(c: Record<string, string>) {
+  closures = c;
+}
+
+/** Public holiday name for the date. */
+export function publicHolidayName(iso: string): string | null {
   return (locale === "nb-NO" ? HOLIDAYS_NO[iso] : HOLIDAYS[iso]) ?? null;
+}
+
+/** All upcoming public holidays on weekdays from `fromIso`, in the current language. */
+export function publicHolidaysFrom(fromIso: string): { date: string; name: string }[] {
+  return Object.keys(HOLIDAYS)
+    .filter((d) => d >= fromIso && weekdayOf(d) !== null)
+    .sort()
+    .map((d) => ({ date: d, name: publicHolidayName(d)! }));
+}
+
+/** Why the kitchen is closed on this date: a public holiday or a Frænd closure day. */
+export function holidayName(iso: string): string | null {
+  return publicHolidayName(iso) ?? closures[iso] ?? null;
 }
 
 export function isDeliveryDay(iso: string): boolean {

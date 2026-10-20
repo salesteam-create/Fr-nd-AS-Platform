@@ -1,6 +1,7 @@
 "use client";
 
-import { Download, MapPin, Phone, Printer } from "lucide-react";
+import { Download, MapPin, Phone, Printer, Smartphone } from "lucide-react";
+import Link from "next/link";
 import { DateNav } from "@/components/DateNav";
 import { Badge, Button, Card, CardHeader, PageHeader } from "@/components/ui";
 import { addDays, nextDeliveryDay, toISO } from "@/lib/dates";
@@ -52,6 +53,12 @@ export default function DeliveryPage() {
             <Button variant="secondary" onClick={() => window.print()}>
               <Printer className="h-4 w-4" /> {t("Print", "Skriv ut")}
             </Button>
+            <Link
+              href={`/driver?date=${date}`}
+              className="inline-flex items-center justify-center gap-2 bg-sort-900 px-5 py-2.5 text-[13px] font-medium uppercase tracking-caps text-white hover:bg-sort-700"
+            >
+              <Smartphone className="h-4 w-4" /> {t("Open driver view", "Åpne sjåførvisning")}
+            </Link>
           </>
         }
       />

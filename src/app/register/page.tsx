@@ -17,6 +17,7 @@ const SEGMENTS = ["Shared office space", "Commercial building", "Public sector",
 export default function RegisterPage() {
   const register = useDemo((s) => s.registerCustomer);
   const notify = useDemo((s) => s.notify);
+  const sendEmail = useDemo((s) => s.sendEmail);
   const areas = useDemo((s) => s.settings.deliveryAreas);
   const router = useRouter();
   const { t, lang } = useT();
@@ -76,7 +77,7 @@ export default function RegisterPage() {
     if (Object.keys(err).length) return;
 
     const addr = `${f.street}, ${f.postcode} ${f.city}`;
-    register({
+    const customerId = register({
       name: f.name.trim(),
       orgNumber: orgDigits,
       segment: f.segment,
@@ -90,12 +91,14 @@ export default function RegisterPage() {
       invoiceFrequency: f.invoiceFrequency,
       pricePerPortion: null,
     });
+    const emailId = sendEmail({ customerId, kind: "welcome" });
     notify({
       title: t(`Welcome, ${f.name.trim()}!`, `Velkommen, ${f.name.trim()}!`),
       body: t(
-        "Account created, customer added to Tripletex and confirmation email sent (simulated).",
-        "Kontoen er opprettet, kunden er lagt inn i Tripletex og bekreftelse er sendt på e-post (simulert).",
+        "Account created, customer added to Tripletex (simulated) and a welcome email sent.",
+        "Kontoen er opprettet, kunden er lagt inn i Tripletex (simulert) og en velkomst-e-post er sendt.",
       ),
+      emailId,
     });
     router.push("/portal/standing?welcome=1");
   };

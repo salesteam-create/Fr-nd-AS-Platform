@@ -190,6 +190,26 @@ export interface Settings {
   deliveryAreas: DeliveryArea[];
 }
 
+/** A simulated email. Stored as structured data so it renders in the current language. */
+export type EmailKind = "welcome" | "order_confirmation" | "standing_confirmation" | "closure_notice" | "fraend_change";
+
+export interface SimEmail {
+  id: string;
+  at: string; // ISO timestamp
+  customerId: string;
+  to: string;
+  kind: EmailKind;
+  /** order_confirmation, fraend_change: changed days (portions before and after; 0 = no delivery) */
+  changes?: { date: string; before: number; after: number }[];
+  /** standing_confirmation: start date and Mon..Fri portions (null pattern = paused) */
+  from?: string;
+  pattern?: number[] | null;
+  /** closure_notice */
+  date?: string;
+  reason?: string;
+  portions?: number;
+}
+
 export interface DemoData {
   customers: Customer[];
   standing: Record<string, StandingOrderVersion[]>;
@@ -201,4 +221,9 @@ export interface DemoData {
   nextInvoiceNumber: number;
   nextTripletexCustomerId: number;
   nextTripletexInvoiceId: number;
+  /** Frænd closure days: date -> reason */
+  closures: Record<string, string>;
+  emails: SimEmail[];
+  /** Delivered stops per date (customer ids), ticked off in the driver view */
+  delivered: Record<string, string[]>;
 }

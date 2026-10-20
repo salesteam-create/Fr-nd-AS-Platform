@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { DemoBar } from "@/components/DemoBar";
+import { EmailPreview } from "@/components/EmailPreview";
 import { Hydrated } from "@/components/Hydrated";
 import { LangFromUrl } from "@/components/LangToggle";
 import { Toaster } from "@/components/Toaster";
@@ -31,6 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <LangFromUrl />
           {children}
           <Toaster />
+          <EmailPreview />
           <DemoBar />
         </Hydrated>
       </body>

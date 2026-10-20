@@ -9,6 +9,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  actions: read
 
 concurrency:
   group: pages
@@ -41,5 +42,19 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      # While Settings > Pages > Source is still "Deploy from a branch", GitHub also runs its own
+      # branch build on every push, and whichever finishes last is what the site shows. Wait for it,
+      # so this deploy always lands last. Harmless once the source is switched to GitHub Actions.
+      - name: Wait for GitHub's branch build to finish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for i in $(seq 1 36); do
+            n=$(gh api "repos/${{ github.repository }}/actions/runs?head_sha=${{ github.sha }}" \
+              --jq '[.workflow_runs[] | select(.name == "pages build and deployment" and .status != "completed")] | length')
+            echo "branch builds still running: $n"
+            [ "$n" = "0" ] && break
+            sleep 10
+          done
       - id: deployment
         uses: actions/deploy-pages@v4

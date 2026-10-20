@@ -36,7 +36,7 @@ export default function DriverPage() {
 
   return (
     <div className="min-h-screen bg-krem pb-28">
-      <header className="sticky top-0 z-20 border-b border-gra-300 bg-white">
+      <header className="sticky top-10 z-20 border-b border-gra-300 bg-white">
         <div className="flex items-center justify-between gap-3 px-4 py-3">
           <Logo href="/admin/delivery" width={84} sub={t("Driver", "Sjåfør")} />
           <LangToggle />

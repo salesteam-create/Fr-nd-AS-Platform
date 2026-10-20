@@ -4,6 +4,7 @@ import { EmailPreview } from "@/components/EmailPreview";
 import { Hydrated } from "@/components/Hydrated";
 import { LangFromUrl } from "@/components/LangToggle";
 import { Toaster } from "@/components/Toaster";
+import { ViewSwitcher } from "@/components/ViewSwitcher";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -30,6 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <Hydrated>
           <LangFromUrl />
+          <ViewSwitcher />
           {children}
           <Toaster />
           <EmailPreview />

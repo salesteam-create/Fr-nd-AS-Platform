@@ -41,7 +41,7 @@ To preview the export locally under the same sub-path: `PAGES_BASE_PATH=/Fr-nd-A
 
 ## Demo controls
 
-The dark **Demo** button (bottom left) opens demo controls:
+The black **Demo · View as** bar at the top of every page switches between the customer portal, Frænd admin and the driver view. The **Demo** button (bottom left) opens demo controls:
 - Move the demo clock (+1 h, +1 day, "2 min before next deadline", +5 min) to show orders locking
 - Switch between the customer portal and admin
 - Reset all demo data

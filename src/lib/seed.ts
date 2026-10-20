@@ -181,6 +181,7 @@ export function createSeed(todayIso: string): DemoData {
     at: new Date(now.getTime() - 3600_000 * 20).toISOString(),
     kind: "ledger",
     message: "Customer ledger synchronised from Tripletex (payments updated)",
+    messageNo: "Kundereskontro synkronisert fra Tripletex (innbetalinger oppdatert)",
     ok: true,
   });
   return data;

@@ -74,8 +74,27 @@ const HOLIDAYS: Record<string, string> = {
   "2027-05-17": "Constitution Day / Whit Monday",
 };
 
+const HOLIDAYS_NO: Record<string, string> = {
+  "2026-01-01": "Første nyttårsdag",
+  "2026-04-02": "Skjærtorsdag",
+  "2026-04-03": "Langfredag",
+  "2026-04-06": "Andre påskedag",
+  "2026-05-01": "Arbeidernes dag",
+  "2026-05-14": "Kristi himmelfartsdag",
+  "2026-05-25": "Andre pinsedag",
+  "2026-12-24": "Julaften (stengt)",
+  "2026-12-25": "Første juledag",
+  "2026-12-31": "Nyttårsaften (stengt)",
+  "2027-01-01": "Første nyttårsdag",
+  "2027-03-25": "Skjærtorsdag",
+  "2027-03-26": "Langfredag",
+  "2027-03-29": "Andre påskedag",
+  "2027-05-06": "Kristi himmelfartsdag",
+  "2027-05-17": "Grunnlovsdagen / andre pinsedag",
+};
+
 export function holidayName(iso: string): string | null {
-  return HOLIDAYS[iso] ?? null;
+  return (locale === "nb-NO" ? HOLIDAYS_NO[iso] : HOLIDAYS[iso]) ?? null;
 }
 
 export function isDeliveryDay(iso: string): boolean {
@@ -106,26 +125,37 @@ export function nextDeliveryDay(fromIso: string): string {
   return d;
 }
 
-const dayFmt = new Intl.DateTimeFormat("en-GB", { weekday: "short", day: "numeric", month: "short" });
-const longFmt = new Intl.DateTimeFormat("en-GB", { weekday: "long", day: "numeric", month: "long" });
-const dateFmt = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", year: "numeric" });
-const timeFmt = new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit" });
-const monthFmt = new Intl.DateTimeFormat("en-GB", { month: "short", year: "numeric" });
+// Date formatting follows the UI language (set from the store via setDateLocale).
+let locale: "en-GB" | "nb-NO" = "en-GB";
+export function setDateLocale(lang: "en" | "no") {
+  locale = lang === "no" ? "nb-NO" : "en-GB";
+}
 
-export const fmtDay = (iso: string) => dayFmt.format(fromISO(iso));
-export const fmtLong = (iso: string) => longFmt.format(fromISO(iso));
-export const fmtDate = (iso: string) => dateFmt.format(fromISO(iso));
-export const fmtTime = (d: Date) => timeFmt.format(d);
-export const fmtMonth = (iso: string) => monthFmt.format(fromISO(iso));
-export const fmtDateTime = (d: Date) => `${dateFmt.format(d)}, ${timeFmt.format(d)}`;
+const cache = new Map<string, Intl.DateTimeFormat>();
+function fmt(opts: Intl.DateTimeFormatOptions) {
+  const key = locale + JSON.stringify(opts);
+  let f = cache.get(key);
+  if (!f) cache.set(key, (f = new Intl.DateTimeFormat(locale, opts)));
+  return f;
+}
+const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+export const fmtDay = (iso: string) => cap(fmt({ weekday: "short", day: "numeric", month: "short" }).format(fromISO(iso)));
+export const fmtLong = (iso: string) => cap(fmt({ weekday: "long", day: "numeric", month: "long" }).format(fromISO(iso)));
+export const fmtDate = (iso: string) => fmt({ day: "numeric", month: "short", year: "numeric" }).format(fromISO(iso));
+export const fmtTime = (d: Date) => fmt({ hour: "2-digit", minute: "2-digit" }).format(d);
+export const fmtMonth = (iso: string) => cap(fmt({ month: "short", year: "numeric" }).format(fromISO(iso)));
+export const fmtWeekdayShort = (d: Date) => cap(fmt({ weekday: "short" }).format(d));
+export const fmtDateTime = (d: Date) => `${fmtDate(toISO(d))}, ${fmtTime(d)}`;
 
 export function fmtCountdown(ms: number): string {
-  if (ms <= 0) return "passed";
+  if (ms <= 0) return locale === "nb-NO" ? "passert" : "passed";
   const mins = Math.floor(ms / 60000);
   const days = Math.floor(mins / 1440);
   const hours = Math.floor((mins % 1440) / 60);
   const m = mins % 60;
-  if (days > 0) return `${days}d ${hours}h`;
-  if (hours > 0) return `${hours}h ${m}m`;
+  const h = locale === "nb-NO" ? "t" : "h";
+  if (days > 0) return `${days}d ${hours}${h}`;
+  if (hours > 0) return `${hours}${h} ${m}m`;
   return `${m}m`;
 }

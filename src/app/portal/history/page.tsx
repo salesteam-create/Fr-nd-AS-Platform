@@ -8,6 +8,7 @@ import { addDays, fmtDate, fmtDay, toISO, weekDates, weekNumber, weekStart } fro
 import { effectiveOrder, nok, priceFor } from "@/lib/logic";
 import { useCurrentCustomer, useDemo, useNow } from "@/lib/store";
 import { WEEKDAYS, type Invoice } from "@/lib/types";
+import { frequencyLabel, useT, weekdayShort } from "@/lib/i18n";
 
 export default function HistoryPage() {
   const customer = useCurrentCustomer()!;
@@ -16,17 +17,21 @@ export default function HistoryPage() {
   const thisWeek = weekStart(toISO(now));
   const [open, setOpen] = useState<Invoice | null>(null);
   const price = priceFor(customer, data);
+  const { t, lang } = useT();
 
   const weeks = Array.from({ length: 8 }, (_, i) => addDays(thisWeek, -7 * (i + 1)));
   const invoices = data.invoices.filter((i) => i.customerId === customer.id && i.status !== "draft").sort((a, b) => b.number - a.number);
 
   return (
     <div>
-      <PageHeader title="History & invoices" subtitle="Delivered orders and invoices for your company." />
+      <PageHeader title={t("History & invoices", "Historikk og fakturaer")} subtitle={t("Delivered orders and invoices for your company.", "Leverte bestillinger og fakturaer for bedriften din.")} />
       <div className="grid gap-6">
         <Card>
-          <CardHeader title="Invoices" subtitle={`Sent by ${customer.invoiceChannel}, ${customer.invoiceFrequency === "agreement" ? "as agreed" : customer.invoiceFrequency}`} />
-          <Table head={["Invoice", "Period", "Portions", "Total incl. VAT", "Status", ""]}>
+          <CardHeader
+            title={t("Invoices", "Fakturaer")}
+            subtitle={`${t("Sent as", "Sendes som")} ${customer.invoiceChannel}, ${frequencyLabel(customer.invoiceFrequency, lang).toLowerCase()}`}
+          />
+          <Table head={[t("Invoice", "Faktura"), t("Period", "Periode"), t("Portions", "Porsjoner"), t("Total incl. VAT", "Totalt inkl. mva."), t("Status", "Status"), ""]}>
             {invoices.map((inv) => (
               <tr key={inv.id}>
                 <Td className="font-medium text-sort-900">{inv.number}</Td>
@@ -40,22 +45,22 @@ export default function HistoryPage() {
                 </Td>
                 <Td>
                   <Button variant="ghost" size="sm" onClick={() => setOpen(inv)}>
-                    <Eye className="h-4 w-4" /> View
+                    <Eye className="h-4 w-4" /> {t("View", "Vis")}
                   </Button>
                 </Td>
               </tr>
             ))}
             {invoices.length === 0 && (
               <tr>
-                <Td className="text-gra-500">No invoices yet.</Td>
+                <Td className="text-gra-500">{t("No invoices yet.", "Ingen fakturaer ennå.")}</Td>
               </tr>
             )}
           </Table>
         </Card>
 
         <Card>
-          <CardHeader title="Delivered orders" subtitle="The last eight weeks" />
-          <Table head={["Week", ...WEEKDAYS.map((w) => w.toUpperCase()), "Total", "Amount excl. VAT"]}>
+          <CardHeader title={t("Delivered orders", "Leverte bestillinger")} subtitle={t("The last eight weeks", "De siste åtte ukene")} />
+          <Table head={[t("Week", "Uke"), ...WEEKDAYS.map((w) => weekdayShort(w, lang)), t("Total", "Totalt"), t("Amount excl. VAT", "Beløp eks. mva.")]}>
             {weeks.map((ws) => {
               const dates = weekDates(ws);
               const counts = WEEKDAYS.map((wd) => effectiveOrder(data, customer.id, dates[wd]).order?.total ?? 0);
@@ -63,7 +68,7 @@ export default function HistoryPage() {
               return (
                 <tr key={ws}>
                   <Td className="whitespace-nowrap font-medium text-sort-900">
-                    Week {weekNumber(ws)} <span className="font-normal text-gra-500">· {fmtDay(ws)}</span>
+                    {t("Week", "Uke")} {weekNumber(ws)} <span className="font-normal text-gra-500">· {fmtDay(ws)}</span>
                   </Td>
                   {counts.map((c, i) => (
                     <Td key={i} className="tabular-nums">
@@ -79,13 +84,13 @@ export default function HistoryPage() {
         </Card>
       </div>
 
-      <Modal open={!!open} onClose={() => setOpen(null)} title={open ? `Invoice ${open.number}` : ""} wide>
+      <Modal open={!!open} onClose={() => setOpen(null)} title={open ? `${t("Invoice", "Faktura")} ${open.number}` : ""} wide>
         {open && (
           <>
             <InvoiceView inv={open} customer={customer} />
             <div className="mt-6 flex justify-end">
               <Button variant="secondary" onClick={() => window.print()}>
-                <Printer className="h-4 w-4" /> Print / save as PDF
+                <Printer className="h-4 w-4" /> {t("Print / save as PDF", "Skriv ut / lagre som PDF")}
               </Button>
             </div>
           </>

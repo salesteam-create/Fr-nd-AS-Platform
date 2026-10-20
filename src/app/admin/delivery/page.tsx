@@ -7,10 +7,12 @@ import { addDays, nextDeliveryDay, toISO } from "@/lib/dates";
 import { deliveriesOn, downloadFile, toCSV } from "@/lib/logic";
 import { useDemo, useNow } from "@/lib/store";
 import { useDateParam } from "@/lib/useDateParam";
-import { DIET_KEYS, DIET_LABEL } from "@/lib/types";
+import { dietLabel, useT } from "@/lib/i18n";
+import { DIET_KEYS } from "@/lib/types";
 
 export default function DeliveryPage() {
   const data = useDemo();
+  const { t, lang } = useT();
   const today = toISO(useNow());
   const [date, setDate] = useDateParam(nextDeliveryDay(addDays(today, 1)));
   const rows = deliveriesOn(data, date);
@@ -20,7 +22,7 @@ export default function DeliveryPage() {
     downloadFile(
       `delivery-${date}.csv`,
       toCSV([
-        ["Area", "Company", "Contact", "Address", "Phone", "Portions", "Special diets", "Comment"],
+        [t("Area", "Område"), t("Company", "Bedrift"), t("Contact", "Kontaktperson"), t("Address", "Adresse"), t("Phone", "Telefon"), t("Portions", "Porsjoner"), t("Special diets", "Spesialkost"), t("Comment", "Kommentar")],
         ...rows.map((r) => {
           const a = r.customer.deliveryAddresses[0];
           return [
@@ -30,7 +32,7 @@ export default function DeliveryPage() {
             `${a.street}, ${a.postcode} ${a.city}`,
             r.customer.phone,
             r.order.total,
-            DIET_KEYS.filter((k) => r.order.diets[k] > 0).map((k) => `${r.order.diets[k]} ${DIET_LABEL[k]}`).join("; "),
+            DIET_KEYS.filter((k) => r.order.diets[k] > 0).map((k) => `${r.order.diets[k]} ${dietLabel(k, lang)}`).join("; "),
             r.order.comment ?? "",
           ];
         }),
@@ -40,15 +42,15 @@ export default function DeliveryPage() {
   return (
     <div>
       <PageHeader
-        title="Delivery list"
-        subtitle={`${rows.length} stops · ${rows.reduce((s, r) => s + r.order.total, 0)} portions`}
+        title={t("Delivery list", "Leveringsliste")}
+        subtitle={`${rows.length} ${t("stops", "stopp")} · ${rows.reduce((s, r) => s + r.order.total, 0)} ${t("portions", "porsjoner")}`}
         action={
           <>
             <Button variant="secondary" onClick={exportCsv}>
               <Download className="h-4 w-4" /> CSV
             </Button>
             <Button variant="secondary" onClick={() => window.print()}>
-              <Printer className="h-4 w-4" /> Print
+              <Printer className="h-4 w-4" /> {t("Print", "Skriv ut")}
             </Button>
           </>
         }
@@ -59,7 +61,7 @@ export default function DeliveryPage() {
       <div className="space-y-6">
         {areas.map((area) => (
           <Card key={area}>
-            <CardHeader title={area} subtitle={`${rows.filter((r) => r.area === area).length} stops`} />
+            <CardHeader title={area === "Outside areas" ? t("Outside areas", "Utenfor områdene") : area} subtitle={`${rows.filter((r) => r.area === area).length} ${t("stops", "stopp")}`} />
             <div className="divide-y divide-gra-100">
               {rows
                 .filter((r) => r.area === area)
@@ -84,7 +86,7 @@ export default function DeliveryPage() {
                         <div className="flex flex-wrap gap-1">
                           {DIET_KEYS.filter((k) => r.order.diets[k] > 0).map((k) => (
                             <Badge key={k} tone="green">
-                              {r.order.diets[k]} {DIET_LABEL[k].toLowerCase()}
+                              {r.order.diets[k]} {dietLabel(k, lang).toLowerCase()}
                             </Badge>
                           ))}
                         </div>
@@ -96,7 +98,7 @@ export default function DeliveryPage() {
             </div>
           </Card>
         ))}
-        {rows.length === 0 && <Card className="p-8 text-center text-gra-500">No deliveries on this day.</Card>}
+        {rows.length === 0 && <Card className="p-8 text-center text-gra-500">{t("No deliveries on this day.", "Ingen leveranser denne dagen.")}</Card>}
       </div>
     </div>
   );

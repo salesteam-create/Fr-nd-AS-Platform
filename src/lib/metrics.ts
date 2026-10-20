@@ -29,7 +29,7 @@ export function monthlySeries(data: DemoData, todayIso: string, months: number) 
   return out;
 }
 
-export function bestSellers(data: DemoData, from: string, to: string, todayIso: string, limit = 5) {
+export function bestSellers(data: DemoData, from: string, to: string, todayIso: string, limit = 5, lang: "en" | "no" = "en") {
   const counts = new Map<string, { name: string; portions: number }>();
   eachDay(from, to, (d) => {
     const wd = weekdayOf(d);
@@ -43,7 +43,7 @@ export function bestSellers(data: DemoData, from: string, to: string, todayIso: 
       [menu.main, main],
       [menu.vegetarian, veg],
     ] as const) {
-      const c = counts.get(dish.id) ?? { name: dish.name, portions: 0 };
+      const c = counts.get(dish.id) ?? { name: lang === "no" && dish.no ? dish.no.name : dish.name, portions: 0 };
       c.portions += n;
       counts.set(dish.id, c);
     }

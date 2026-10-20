@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { addDays, toISO } from "./dates";
+import { addDays, setDateLocale, toISO } from "./dates";
 import { buildInvoice, firstOpenDate, getMenu } from "./logic";
 import { createSeed } from "./seed";
 import type { Customer, DayOrder, DemoData, Settings, WeekMenu, WeekPattern } from "./types";
@@ -19,6 +19,8 @@ interface DemoState extends DemoData {
   clockOffsetMs: number;
   currentCustomerId: string | null;
   toasts: Toast[];
+  lang: "en" | "no";
+  setLang: (lang: "en" | "no") => void;
 
   // demo controls
   setClockOffset: (ms: number) => void;
@@ -56,9 +58,14 @@ export const useDemo = create<DemoState>()(
       clockOffsetMs: 0,
       currentCustomerId: null,
       toasts: [],
+      lang: "en",
+      setLang: (lang) => {
+        setDateLocale(lang);
+        set({ lang });
+      },
 
       setClockOffset: (ms) => set({ clockOffsetMs: ms }),
-      resetDemo: () => set({ ...seedState(), clockOffsetMs: 0, currentCustomerId: null }),
+      resetDemo: () => set({ ...seedState(), clockOffsetMs: 0, currentCustomerId: null }), // keeps the chosen language
       notify: (t) => {
         const id = toastSeq++;
         set((s) => ({ toasts: [...s.toasts, { ...t, id }] }));
@@ -86,7 +93,7 @@ export const useDemo = create<DemoState>()(
           currentCustomerId: id,
           nextTripletexCustomerId: tripletexId + 1,
           syncLog: [
-            { id: `log-${Date.now()}`, at: nowFrom(s.clockOffsetMs).toISOString(), kind: "customer", message: `Customer "${customer.name}" created in Tripletex (#${tripletexId})`, ok: true },
+            { id: `log-${Date.now()}`, at: nowFrom(s.clockOffsetMs).toISOString(), kind: "customer", message: `Customer "${customer.name}" created in Tripletex (#${tripletexId})`, messageNo: `Kunde «${customer.name}» opprettet i Tripletex (#${tripletexId})`, ok: true },
             ...s.syncLog,
           ],
         });
@@ -162,12 +169,18 @@ export const useDemo = create<DemoState>()(
               at: nowFrom(s.clockOffsetMs).toISOString(),
               kind: "invoice",
               message: `Invoice ${i.number} for ${c?.name ?? "customer"} created in Tripletex (#${txId}) and sent as ${i.channel}`,
+              messageNo: `Faktura ${i.number} til ${c?.name ?? "kunde"} opprettet i Tripletex (#${txId}) og sendt som ${i.channel}`,
               ok: true,
             });
             return { ...i, tripletexStatus: "synced" as const, tripletexId: txId++, status: "sent" as const };
           });
           set({ invoices, syncLog: log, nextTripletexInvoiceId: txId });
-          get().notify({ kind: "success", title: `${invoiceIds.length} invoice(s) sent to Tripletex`, body: "Simulated: invoices created and sent by PDF or EHF." });
+          const no = get().lang === "no";
+          get().notify({
+            kind: "success",
+            title: no ? `${invoiceIds.length} faktura(er) sendt til Tripletex` : `${invoiceIds.length} invoice(s) sent to Tripletex`,
+            body: no ? "Simulert: fakturaene er opprettet og sendt som PDF eller EHF." : "Simulated: invoices created and sent by PDF or EHF.",
+          });
         }, 1600);
       },
 
@@ -185,15 +198,23 @@ export const useDemo = create<DemoState>()(
         set({
           invoices,
           syncLog: [
-            { id: `log-ledger-${Date.now()}`, at: nowFrom(s.clockOffsetMs).toISOString(), kind: "ledger", message: `Customer ledger synchronised from Tripletex (${paid} payment(s) registered)`, ok: true },
+            { id: `log-ledger-${Date.now()}`, at: nowFrom(s.clockOffsetMs).toISOString(), kind: "ledger", message: `Customer ledger synchronised from Tripletex (${paid} payment(s) registered)`, messageNo: `Kundereskontro synkronisert fra Tripletex (${paid} innbetaling(er) registrert)`, ok: true },
             ...s.syncLog,
           ],
         });
-        get().notify({ kind: "success", title: "Ledger synchronised", body: `${paid} invoice(s) marked as paid (simulated).` });
+        const no = get().lang === "no";
+        get().notify({
+          kind: "success",
+          title: no ? "Reskontro synkronisert" : "Ledger synchronised",
+          body: no ? `${paid} faktura(er) markert som betalt (simulert).` : `${paid} invoice(s) marked as paid (simulated).`,
+        });
       },
     }),
     {
       name: "fraend-demo-v1",
+      onRehydrateStorage: () => (state) => {
+        if (state) setDateLocale(state.lang);
+      },
       partialize: (s) => {
         const { toasts, ...rest } = s;
         void toasts;

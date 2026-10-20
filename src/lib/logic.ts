@@ -110,23 +110,25 @@ export interface ProductionLine {
 }
 
 /** Production list for a day (FR-50). Special diets are variants made on top of the two daily dishes. */
-export function productionFor(data: DemoData, iso: string, todayIso: string): ProductionLine[] {
+export function productionFor(data: DemoData, iso: string, todayIso: string, lang: "en" | "no" = "en"): ProductionLine[] {
   const wd = weekdayOf(iso);
   if (!wd) return [];
   const menu = getMenu(data, weekStart(iso), todayIso).days[wd];
   const rows = deliveriesOn(data, iso);
   const sum = (fn: (o: DayOrder) => number) => rows.reduce((s, r) => s + fn(r.order), 0);
+  const no = lang === "no";
+  const name = (d: Dish) => (no && d.no ? d.no.name : d.name);
   const otherNotes = rows
     .filter((r) => r.order.diets.other > 0)
-    .map((r) => `${r.customer.name}: ${r.order.diets.other} × ${r.order.otherNote || "unspecified"}`);
+    .map((r) => `${r.customer.name}: ${r.order.diets.other} × ${r.order.otherNote || (no ? "ikke spesifisert" : "unspecified")}`);
   return [
-    { key: "main", label: menu.main.name, dish: menu.main, portions: sum((o) => o.total - dietSum(o)) },
-    { key: "vegetarian", label: menu.vegetarian.name, dish: menu.vegetarian, portions: sum((o) => o.diets.vegetarian) },
-    { key: "vegan", label: `Vegan: ${menu.vegetarian.name}`, dish: null, portions: sum((o) => o.diets.vegan) },
-    { key: "glutenFree", label: `Gluten-free: ${menu.main.name}`, dish: null, portions: sum((o) => o.diets.glutenFree) },
-    { key: "lactoseFree", label: `Lactose-free: ${menu.main.name}`, dish: null, portions: sum((o) => o.diets.lactoseFree) },
-    { key: "halal", label: `Halal: ${menu.main.name}`, dish: null, portions: sum((o) => o.diets.halal) },
-    { key: "other", label: "Other dietary needs", dish: null, portions: sum((o) => o.diets.other), notes: otherNotes },
+    { key: "main", label: name(menu.main), dish: menu.main, portions: sum((o) => o.total - dietSum(o)) },
+    { key: "vegetarian", label: name(menu.vegetarian), dish: menu.vegetarian, portions: sum((o) => o.diets.vegetarian) },
+    { key: "vegan", label: `${no ? "Vegansk" : "Vegan"}: ${name(menu.vegetarian)}`, dish: null, portions: sum((o) => o.diets.vegan) },
+    { key: "glutenFree", label: `${no ? "Glutenfri" : "Gluten-free"}: ${name(menu.main)}`, dish: null, portions: sum((o) => o.diets.glutenFree) },
+    { key: "lactoseFree", label: `${no ? "Laktosefri" : "Lactose-free"}: ${name(menu.main)}`, dish: null, portions: sum((o) => o.diets.lactoseFree) },
+    { key: "halal", label: `Halal: ${name(menu.main)}`, dish: null, portions: sum((o) => o.diets.halal) },
+    { key: "other", label: no ? "Andre kosthensyn" : "Other dietary needs", dish: null, portions: sum((o) => o.diets.other), notes: otherNotes },
   ];
 }
 

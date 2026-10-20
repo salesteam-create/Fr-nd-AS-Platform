@@ -127,6 +127,7 @@ export interface Dish {
   allergens: Allergen[];
   labels: DishLabel[];
   hue: number; // placeholder image colour
+  no?: { name: string; description: string }; // Norwegian text
 }
 
 export interface DayMenu {
@@ -171,6 +172,7 @@ export interface SyncLogEntry {
   at: string;
   kind: "customer" | "invoice" | "ledger";
   message: string;
+  messageNo?: string;
   ok: boolean;
 }
 

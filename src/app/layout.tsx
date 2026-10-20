@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { DemoBar } from "@/components/DemoBar";
 import { Hydrated } from "@/components/Hydrated";
+import { LangFromUrl } from "@/components/LangToggle";
 import { Toaster } from "@/components/Toaster";
 import "./globals.css";
 
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <Hydrated>
+          <LangFromUrl />
           {children}
           <Toaster />
           <DemoBar />
